@@ -1,4 +1,4 @@
-import React,{useState} from "react";
+import React,{useEffect, useState} from "react";
 import "./Navbar.css";
 import { Button, ButtonGroup ,Image,Box} from '@chakra-ui/react'
 import { getAuth,signInWithPopup,setPersistence ,browserSessionPersistence,signOut} from "firebase/auth";
@@ -29,8 +29,8 @@ function Navbar() {
           //console.log("error",error)
         }
       }
-      console.log(pic)
-     
+      
+      
   } catch (error) {
     console.log("error:", error)
   }
@@ -49,7 +49,7 @@ function Navbar() {
         display="flex"
         w="300px"
         h="70px"
-        justifyContent="space-evenly"
+        justifyContent="flex-end"
         alignItems="center"
         flexDirection="row"
       >
@@ -73,6 +73,7 @@ function Navbar() {
         w="60px"
         h="60px"
         borderRadius="100px"
+        m="10px"
       >
 
       </Image>:null}
