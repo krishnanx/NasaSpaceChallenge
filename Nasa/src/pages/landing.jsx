@@ -2,18 +2,24 @@ import './landing.css';
 import { Button } from '@chakra-ui/react';
 import { useContext } from 'react';
 import { Authentication } from '../Components/contexts/AuthContext';
+import { useNavigate } from 'react-router-dom';
+
 const Landing = () => {
   const [user,setUser] = useContext(Authentication)
+  const navigate = useNavigate();
   const HandleGetStarted = () =>{
+
     if(user){
-        navigate("/Dashboard")
+      setTimeout(() => {
+        navigate('/Dashboard')
+      }, 2000);
     }
     else{
       console.log("sign in ")
       
     }
   }
-
+ 
   const handleSendData = async () => {
     const dataToSend = {
       "Body Type": 1,

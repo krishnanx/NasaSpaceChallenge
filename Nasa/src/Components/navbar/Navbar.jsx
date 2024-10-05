@@ -9,6 +9,7 @@ import {Authentication} from "../contexts/AuthContext"
 import "./Navbar.css";
 import React,{ useEffect } from 'react';
 import { Value } from '../contexts/ValuesContext';
+import { Personal } from '../contexts/PersonalContext';
 
 
 const Navbar = () => {
@@ -26,34 +27,38 @@ const Navbar = () => {
   backgroundSize: "40px 60px"
 }  
   const [email,setEmail] = useState(null) 
-  const [personal,setPersonal] = useContext(Value)
-
+ 
+  const[personal,setPersonal] = useContext(Personal)
   const [user,setUser] = useContext(Authentication);
   const [pic,setPic] = useState(null)
   const navigate = useNavigate();
   const location = useLocation();
   const personalSubcollectionRef = collection(db, 'Database', `${email}`, 'personal');
   const carbonFootprintSubcollectionRef = collection(db, 'Database',` ${email}`, 'carbon footprint');
-  useEffect(()=>{
+  {/*useEffect(()=>{
     try{
+      if(user!==null){
       onSnapshot(personalSubcollectionRef, (snapshot) => {
         const docs = snapshot.docs
   
         console.log(docs[0]._document.data.value.mapValue.fields)
-          
+        setPersonal(docs[0]._document.data.value.mapValue.fields)
+       
+        
         
         ////console.log(todo)
       })
+      }
     }
     catch(error){
       console.log(error)
     }
     
-   },[user])
-  
+   },[user])*/}
+ 
   const HandleGetStarted = () =>{
     if(email){
-        navigate("/Dashboard")
+     
     }
     else{
       try{
@@ -71,17 +76,18 @@ const Navbar = () => {
     try {
       
       const userCredentials = await signInWithPopup(auth, provider);
-      const user = userCredentials.user;
-      console.log(user.email)
-      console.log(user)
-      console.log(user.photoURL)
-      if(user){
-        setEmail(user.email)
-        setUser(user)
-        setPic(user.photoURL)
+      console.log(userCredentials)
+      const users = userCredentials.user;
+      console.log(users.email)
+      console.log(users)
+      console.log(users.photoURL)
+      if(users){
+        setEmail(users.email)
+        setUser(users)
+        //setPic(users.photoURL)
         
         try {
-          setPic(user.photoURL);
+          setPic(users.photoURL);
           //console.log(pic)
           
           console.log("hi")
@@ -95,9 +101,9 @@ const Navbar = () => {
     console.log("error:", error)
   }
   finally{
-    
-
-    navigate("/Dashboard")
+      
+      navigate('/Dashboard')
+   
 
   }
   

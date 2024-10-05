@@ -7,6 +7,7 @@ import Dashboard from './pages/Dashboard/Dashboard'
 import Protected from './Components/Protected/Protected'
 import AuthContext from './Components/contexts/AuthContext'
 import ValuesContext from './Components/contexts/ValuesContext'
+import PersonalContext from './Components/contexts/PersonalContext'
 function App() {
  
 
@@ -15,16 +16,19 @@ function App() {
       <ChakraProvider>
         <AuthContext>
           <ValuesContext>
-            <Router>
-            
-              <Navbar/>
-              <Routes>  
-                <Route path='/' element={<Landing/>}/>
-                <Route path='/Dashboard' element={<Dashboard />}/>
-                
-              </Routes>
+            <PersonalContext>
+              <Router>
+              
+                <Navbar/>
+                <Routes>  
+                  <Route path='/' element={<Landing/>}/>
+                  <Route path='/Dashboard' element={<Dashboard />}/>
+                  
+                </Routes>
           
-            </Router>
+              </Router>
+            </PersonalContext>
+            
           </ValuesContext> 
         </AuthContext>
      

@@ -1,7 +1,11 @@
-import React, { useContext,useState } from 'react';
+import React, { useContext,useEffect,useState } from 'react';
 import { Box ,Select,FormControl,FormLabel,NumberInput,NumberInputStepper,NumberIncrementStepper,NumberInputField,NumberDecrementStepper} from '@chakra-ui/react';
 import {Value} from '../../Components/contexts/ValuesContext';
+import { addDoc, getDocs, setDoc,collection,doc,onSnapshot,updateDoc} from "firebase/firestore";
 import { Button } from '@chakra-ui/react';
+import { db } from '../../Components/Firebase/Firebase';
+import { Authentication } from '../../Components/contexts/AuthContext';
+import { Personal } from '../../Components/contexts/PersonalContext';
 const Dashboard = () => {
   const theme = {
     width: "100%",
@@ -17,11 +21,26 @@ const Dashboard = () => {
     color: "white"  // Ensures the text is visible against the dark background
   };
     const [values,setValues] = useContext(Value);
+    const [personal,setPersonal] = useContext(Personal)
+    const [user,setUser] = useContext(Authentication);
     const [input,setInput ]  = useState(1);
+    const [body,setBody] = useState(null)
+    //console.log(user)
+    const [sex,setSex] = useState(null)
+    const personalSubcollectionRef = collection(db, 'Database', `abhishekkrishnan2006@gmail.com`, 'personal');
     const HandleOnSubmit = () => {
         setInput(1)
+        if(personal===false){
+            updateDoc(personalSubcollectionRef,{
+                body:body,
+                sex:sex
+              });
+        }
+        
         console.log(values)
     }
+    
+    
   return (
     <Box
       style={{
@@ -60,7 +79,60 @@ const Dashboard = () => {
 
        
       >
-        
+        {input===0?
+        <Box
+        w="100%"
+        h="200px"
+        display="flex"
+        flexDirection="row"
+        justifyContent="space-between"
+        alignItems="center"
+       >
+           <FormControl
+           display="flex"
+           flexDirection="column"
+           alignItems="center"
+               
+           >
+               <FormLabel
+                   w="300px"
+                   color="black"
+                   pl="10px"
+               >Body</FormLabel>
+               <Select placeholder='Select option' w="300px"
+                   bgColor="grey"
+                   onChange={(e)=>{setBody(e.target.value)}}
+               >
+                   <option value='obese' 
+                       style={{color:"black",bgColor:"grey"}}
+                   >obese</option>
+                   <option value='overweight' style={{color:"black",bgColor:"grey"}}>overweight</option>
+                   <option value='normal' style={{color:"black",bgColor:"grey"}}>normal</option>
+                   <option value='underweight' style={{color:"black",bgColor:"grey"}}>underweight</option>
+                   
+               </Select>
+           </FormControl>
+           <FormControl
+           display="flex"
+           flexDirection="column"
+           alignItems="center"
+               
+           >
+               <FormLabel
+                   w="300px"
+                   color="black"
+                   pl="10px"
+               >Sex</FormLabel>
+               <Select placeholder='Select option' w="300px"
+                   bgColor="grey"
+                   onChange={(e)=>{setSex(e.target.value)}}
+               >
+                   <option value='male' style={{color:"black",bgColor:"grey"}}>male</option>
+                   <option value='female' style={{color:"black",bgColor:"grey"}}>female</option>
+               </Select>
+           </FormControl>
+        </Box>
+        :null}
         {input===1?<Box
          w="100%"
          h="200px"
@@ -332,10 +404,10 @@ const Dashboard = () => {
                         Wbs:e.target.value 
                       }));}}
                 >
-                    <option value='option2' style={{color:"black",bgColor:"grey"}}>extra large</option>
-                    <option value='option1' style={{color:"black",bgColor:"grey"}}>large</option>
-                    <option value='option2' style={{color:"black",bgColor:"grey"}}>medium</option>
-                    <option value='option3' style={{color:"black",bgColor:"grey"}}>small</option>
+                    <option value='extra large' style={{color:"black",bgColor:"grey"}}>extra large</option>
+                    <option value='large' style={{color:"black",bgColor:"grey"}}>large</option>
+                    <option value='medium' style={{color:"black",bgColor:"grey"}}>medium</option>
+                    <option value='small' style={{color:"black",bgColor:"grey"}}>small</option>
                     
                 </Select>
             </FormControl>
