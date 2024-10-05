@@ -86,6 +86,28 @@ nav ul li a {
 
 .feature-box {
     max-width: 30%;
+    border: 2px solid #4CAF50; /* Green border color */
+    border-radius: 10px; /* Rounded corners */
+    padding: 20px;
+    margin: 10px;
+    background-color: #f9f9f9; /* Light background color */
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow effect */
+    transition: transform 0.3s ease;
+}
+.feature-box:hover {
+    transform: scale(1.2); /* Enlarges the box */
+    z-index: 10; /* Brings the hovered box in front of other elements */
+  }
+  
+.feature-box h3 {
+    margin-bottom: 10px;
+    font-size: 1.5em;
+    color: #333;
+}
+  
+.feature-box p {
+    font-size: 1em;
+    color: #555;
 }
 
 .feature-box h3 {
