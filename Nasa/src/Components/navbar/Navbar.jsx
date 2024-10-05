@@ -109,9 +109,11 @@ const Navbar = () => {
       >
 
       </div>
+      <img id='logo' src="./newlogo.jpg" alt="logo" />
       <ul id="list">
+        
         <li>Home</li>
-        <li>About</li>
+        <li><a href="#about">About</a></li>
        
       </ul>
       <Box

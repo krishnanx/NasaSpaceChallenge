@@ -92,9 +92,9 @@ const Landing = () => {
       </section>
 
       <section id="about" className="about-section">
-        <div className="container">
-          <h2 >About CarbonTally</h2>
-          <p>
+        <div className="container" id='about'>
+          <h2 id='cc'>About CarbonTally</h2><br /><br />
+          <p id='content'>
             CarbonTally is a platform designed to help individuals understand their impact on the
             environment and take actionable steps toward reducing their carbon footprint. Together,
             we can create a more sustainable world.
