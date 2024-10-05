@@ -1,7 +1,14 @@
 import React from 'react'
-import { initializeApp } from "firebase/app";
+import { initializeApp} from "firebase/app";
+import {
+    getFirestore,collection,getDocs,addDoc
+} from 'firebase/firestore'
 import { getAnalytics } from "firebase/analytics";
-
+import {
+    getAuth,
+    GoogleAuthProvider,
+    setPersistence
+  } from 'firebase/auth'
   
 
 const apiKey = `${import.meta.env.VITE_APP_API_KEY}`
@@ -24,5 +31,8 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
+export const db = getFirestore()
+export const auth = getAuth(app)
+export const provider = new GoogleAuthProvider();
  
 
