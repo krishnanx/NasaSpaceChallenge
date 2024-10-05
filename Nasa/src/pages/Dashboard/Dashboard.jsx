@@ -18,7 +18,10 @@ const Dashboard = () => {
   };
     const [values,setValues] = useContext(Value);
     const [input,setInput ]  = useState(1);
-
+    const HandleOnSubmit = () => {
+        setInput(1)
+        console.log(values)
+    }
   return (
     <Box
       style={{
@@ -84,12 +87,12 @@ const Dashboard = () => {
                         diet:e.target.value 
                       }));}}
                 >
-                    <option value='option1' 
+                    <option value='vegetarian' 
                         style={{color:"black",bgColor:"grey"}}
                     >vegetarian</option>
-                    <option value='option2' style={{color:"black",bgColor:"grey"}}>pescatarian</option>
-                    <option value='option3' style={{color:"black",bgColor:"grey"}}>omnivore</option>
-                    <option value='option3' style={{color:"black",bgColor:"grey"}}>vegan</option>
+                    <option value='pescatarian' style={{color:"black",bgColor:"grey"}}>pescatarian</option>
+                    <option value='omnivore' style={{color:"black",bgColor:"grey"}}>omnivore</option>
+                    <option value='vegan' style={{color:"black",bgColor:"grey"}}>vegan</option>
                 </Select>
             </FormControl>
             
@@ -111,10 +114,10 @@ const Dashboard = () => {
                         shower:e.target.value 
                       }));}}
                 >
-                    <option value='option1' style={{color:"black",bgColor:"grey"}}>daily</option>
-                    <option value='option2' style={{color:"black",bgColor:"grey"}}>less frequently</option>
-                    <option value='option3' style={{color:"black",bgColor:"grey"}}>more frequently</option>
-                    <option value='option3' style={{color:"black",bgColor:"grey"}}>twice a day</option>
+                    <option value='more frequently' style={{color:"black",bgColor:"grey"}}>more frequently</option>
+                    <option value='twice a day' style={{color:"black",bgColor:"grey"}}>twice a day</option>
+                    <option value='daily' style={{color:"black",bgColor:"grey"}}>daily</option>
+                    <option value='less frequently' style={{color:"black",bgColor:"grey"}}>less frequently</option>
                 </Select>
             </FormControl>
         
@@ -145,9 +148,9 @@ const Dashboard = () => {
                         heat:e.target.value 
                       }));}}
                 >
-                    <option value='option1' style={{color:"black",bgColor:"grey"}}>coal</option>
-                    <option value='option2' style={{color:"black",bgColor:"grey"}}>natural gas</option>
-                    <option value='option3' style={{color:"black",bgColor:"grey"}}>wood</option>
+                    <option value='coal' style={{color:"black",bgColor:"grey"}}>coal</option>
+                    <option value='natural gas' style={{color:"black",bgColor:"grey"}}>natural gas</option>
+                    <option value='wood' style={{color:"black",bgColor:"grey"}}>wood</option>
                     
                 </Select>
             </FormControl>
@@ -204,10 +207,10 @@ const Dashboard = () => {
                         Tair:e.target.value 
                       }));}}
                 >
-                    <option value='option3' style={{color:"black",bgColor:"grey"}}>very frequently</option>
-                    <option value='option2' style={{color:"black",bgColor:"grey"}}>frequently</option>
-                    <option value='option3' style={{color:"black",bgColor:"grey"}}>rarely</option>
-                    <option value='option3' style={{color:"black",bgColor:"grey"}}>never</option>
+                    <option value='very frequently' style={{color:"black",bgColor:"grey"}}>very frequently</option>
+                    <option value='frequently' style={{color:"black",bgColor:"grey"}}>frequently</option>
+                    <option value='rarely' style={{color:"black",bgColor:"grey"}}>rarely</option>
+                    <option value='never' style={{color:"black",bgColor:"grey"}}>never</option>
                     
                 </Select>
             </FormControl>
@@ -238,7 +241,72 @@ const Dashboard = () => {
             </FormControl>
         
         </Box>:null}
+      
         {input===2?<Box
+         w="100%"
+         h="200px"
+         display="flex"
+         flexDirection="row"
+         justifyContent="space-between"
+         alignItems="center"
+        >
+            <FormControl
+            display="flex"
+            flexDirection="column"
+            alignItems="center"
+                
+            >
+                <FormLabel
+                    w="300px"
+                    color="black"
+                    pl="10px"
+                >Transport</FormLabel>
+                <Select placeholder='Select option' w="300px"
+                    bgColor="grey"
+                    onChange={(e)=>{setValues((prevValues) => ({
+                        ...prevValues,
+                        Transport:e.target.value 
+                      }));}}
+                >
+                    <option value='very frequently' style={{color:"black",bgColor:"grey"}}>very frequently</option>
+                    <option value='frequently' style={{color:"black",bgColor:"grey"}}>frequently</option>
+                    <option value='rarely' style={{color:"black",bgColor:"grey"}}>rarely</option>
+                    <option value='never' style={{color:"black",bgColor:"grey"}}>never</option>
+                    
+                </Select>
+            </FormControl>
+            
+            <FormControl
+                display="flex"
+                flexDirection="column"
+                alignItems="center"
+                
+            >
+                <FormLabel
+                    w="300px"
+                    color="black"
+                    pl="10px"
+                >Vehicle Type</FormLabel>
+                <Select placeholder='Select option' w="300px"
+                    bgColor="grey"
+                    onChange={(e)=>{setValues((prevValues) => ({
+                        ...prevValues,
+                        Vtype:e.target.value 
+                      }));}}
+                >
+                    <option value='petrol' style={{color:"black",bgColor:"grey"}}>petrol</option>
+                    <option value='disel' style={{color:"black",bgColor:"grey"}}>disel</option>
+                    <option value='hybrid' style={{color:"black",bgColor:"grey"}}>hybrid</option>
+                    <option value='lpg' style={{color:"black",bgColor:"grey"}}>lpg</option>
+                    <option value='electric' style={{color:"black",bgColor:"grey"}}>electric</option>
+                    
+                </Select>
+                 
+            </FormControl>
+        
+        </Box>:null}
+        
+        {input===3?<Box
          w="100%"
          h="200px"
          display="flex"
@@ -298,7 +366,7 @@ const Dashboard = () => {
             </FormControl>
         
         </Box>:null}
-        {input===3?<Box
+        {input===4?<Box
          w="100%"
          h="200px"
          display="flex"
@@ -357,7 +425,7 @@ const Dashboard = () => {
             </FormControl>
         
         </Box>:null}
-        {input===3?<Box
+        {input===4?<Box
          w="100%"
          h="200px"
          display="flex"
@@ -423,24 +491,24 @@ const Dashboard = () => {
                    justifyContent="flex-end"
                    alignItems="center"
             >
-                {input!==3?<Button
+                {input!==4?<Button
                     colorScheme='teal'
                     size="md"
                     pl="30px"
                     pr="30px"
                     onClick={()=>{
-                        input<=3?setInput(input+1):null
+                        input<=4?setInput(input+1):null
                     }}
                 >
                     Next
                 </Button>:null}
-                {input===3?<Button
+                {input===4?<Button
                     colorScheme='teal'
                     size="md"
                     pl="30px"
                     pr="30px"
                     onClick={()=>{
-                        input<=3?setInput(input+1):null
+                        HandleOnSubmit()
                     }}
                 >
                     Submit

@@ -73,25 +73,19 @@ function Navbar() {
   }
   return (
     <div id="navContainer" style = {theme}>
-      <div>
+      <div
+        className='Left_icons'
+      >
 
       </div>
       <ul id="list">
         <li>Home</li>
         <li>About</li>
-        {!email?<Button
-          colorScheme='teal'
-          size = "md"
-          onClick={()=>{
-            HandleGetStarted()
-          }}
-        >
-          Get Started
-        </Button>:null}
+       
       </ul>
       <Box
         display="flex"
-        w="300px"
+        w="250px"
         h="70px"
         justifyContent="flex-end"
         alignItems="center"

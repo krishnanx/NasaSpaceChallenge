@@ -16,6 +16,7 @@
     justify-content: space-around; /* Spacing between items */
     padding: 0;
     margin: 0;
+    width:300px;
   }
   
   #list li {
@@ -25,12 +26,19 @@
     gap: 20px;
     justify-content:space-between;
     display: flex;
+    padding-right:10px;
   }
   
   #list li:hover {
-    background-color: lightgray; /* Optional: Hover effect */
+    text-decoration: none;
     border-radius: 5px;
+    cursor:"pointer";
+    color:orange;
   }
   li{
     color:rgb(255, 255, 255)
   }
+.Left_icons{
+  width:200px;
+  height:75px;
+}
