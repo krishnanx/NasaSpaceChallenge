@@ -1,6 +1,7 @@
-import React, { useContext } from 'react';
+import React, { useContext,useState } from 'react';
 import { Box ,Select,FormControl,FormLabel,NumberInput,NumberInputStepper,NumberIncrementStepper,NumberInputField,NumberDecrementStepper} from '@chakra-ui/react';
 import {Value} from '../../Components/contexts/ValuesContext';
+import { Button } from '@chakra-ui/react';
 const Dashboard = () => {
   const theme = {
     width: "100%",
@@ -15,7 +16,8 @@ const Dashboard = () => {
     backgroundSize: "40px 60px",
     color: "white"  // Ensures the text is visible against the dark background
   };
-  const [values,setValues] = useContext(Value)
+    const [values,setValues] = useContext(Value);
+    const [input,setInput ]  = useState(1);
 
   return (
     <Box
@@ -55,7 +57,8 @@ const Dashboard = () => {
 
        
       >
-        <Box
+        
+        {input===1?<Box
          w="100%"
          h="200px"
          display="flex"
@@ -63,10 +66,10 @@ const Dashboard = () => {
          justifyContent="space-between"
          alignItems="center"
         >
-                <FormControl
-                display="flex"
-                flexDirection="column"
-                alignItems="center"
+            <FormControl
+            display="flex"
+            flexDirection="column"
+            alignItems="center"
                 
             >
                 <FormLabel
@@ -76,6 +79,10 @@ const Dashboard = () => {
                 >Diet</FormLabel>
                 <Select placeholder='Select option' w="300px"
                     bgColor="grey"
+                    onChange={(e)=>{setValues((prevValues) => ({
+                        ...prevValues,
+                        diet:e.target.value 
+                      }));}}
                 >
                     <option value='option1' 
                         style={{color:"black",bgColor:"grey"}}
@@ -99,6 +106,10 @@ const Dashboard = () => {
                 >How Often do you Shower?</FormLabel>
                 <Select placeholder='Select option' w="300px"
                     bgColor="grey"
+                    onChange={(e)=>{setValues((prevValues) => ({
+                        ...prevValues,
+                        shower:e.target.value 
+                      }));}}
                 >
                     <option value='option1' style={{color:"black",bgColor:"grey"}}>daily</option>
                     <option value='option2' style={{color:"black",bgColor:"grey"}}>less frequently</option>
@@ -107,8 +118,8 @@ const Dashboard = () => {
                 </Select>
             </FormControl>
         
-        </Box>
-        <Box
+        </Box>:null}
+        {input===1?<Box
          w="100%"
          h="200px"
          display="flex"
@@ -129,6 +140,10 @@ const Dashboard = () => {
                 >Heating Energy Source</FormLabel>
                 <Select placeholder='Select option' w="300px"
                     bgColor="grey"
+                    onChange={(e)=>{setValues((prevValues) => ({
+                        ...prevValues,
+                        heat:e.target.value 
+                      }));}}
                 >
                     <option value='option1' style={{color:"black",bgColor:"grey"}}>coal</option>
                     <option value='option2' style={{color:"black",bgColor:"grey"}}>natural gas</option>
@@ -150,7 +165,11 @@ const Dashboard = () => {
                 >Monthly Grocery Bill</FormLabel>
                 <NumberInput>
                     <NumberInputField w="300px"
-                    bgColor="grey"/>
+                    bgColor="grey"
+                    onChange={(e)=>{setValues((prevValues) => ({
+                        ...prevValues,
+                        Gbill:e.target.value 
+                      }));}}/>
                     <NumberInputStepper>
                         <NumberIncrementStepper />
                         <NumberDecrementStepper />
@@ -158,8 +177,278 @@ const Dashboard = () => {
                 </NumberInput>
             </FormControl>
         
-        </Box>
+        </Box>:null}
+        {input===2?<Box
+         w="100%"
+         h="200px"
+         display="flex"
+         flexDirection="row"
+         justifyContent="space-between"
+         alignItems="center"
+        >
+            <FormControl
+            display="flex"
+            flexDirection="column"
+            alignItems="center"
+                
+            >
+                <FormLabel
+                    w="300px"
+                    color="black"
+                    pl="10px"
+                >Frequency of Traveling by Air</FormLabel>
+                <Select placeholder='Select option' w="300px"
+                    bgColor="grey"
+                    onChange={(e)=>{setValues((prevValues) => ({
+                        ...prevValues,
+                        Tair:e.target.value 
+                      }));}}
+                >
+                    <option value='option3' style={{color:"black",bgColor:"grey"}}>very frequently</option>
+                    <option value='option2' style={{color:"black",bgColor:"grey"}}>frequently</option>
+                    <option value='option3' style={{color:"black",bgColor:"grey"}}>rarely</option>
+                    <option value='option3' style={{color:"black",bgColor:"grey"}}>never</option>
+                    
+                </Select>
+            </FormControl>
+            
+            <FormControl
+                display="flex"
+                flexDirection="column"
+                alignItems="center"
+                
+            >
+                <FormLabel
+                    w="300px"
+                    color="black"
+                    pl="10px"
+                >Vehicle Monthly Distance Km</FormLabel>
+                 <NumberInput>
+                    <NumberInputField w="300px"
+                    bgColor="grey"
+                    onChange={(e)=>{setValues((prevValues) => ({
+                        ...prevValues,
+                        VmD:e.target.value 
+                      }));}}/>
+                    <NumberInputStepper>
+                        <NumberIncrementStepper />
+                        <NumberDecrementStepper />
+                    </NumberInputStepper>
+                </NumberInput>
+            </FormControl>
         
+        </Box>:null}
+        {input===2?<Box
+         w="100%"
+         h="200px"
+         display="flex"
+         flexDirection="row"
+         justifyContent="space-between"
+         alignItems="center"
+        >
+            <FormControl
+                display="flex"
+                flexDirection="column"
+                alignItems="center"
+                
+            >
+                <FormLabel
+                    w="300px"
+                    color="black"
+                    pl="10px"
+                >Waste Bag Size</FormLabel>
+                <Select placeholder='Select option' w="300px"
+                    bgColor="grey"
+                    onChange={(e)=>{setValues((prevValues) => ({
+                        ...prevValues,
+                        Wbs:e.target.value 
+                      }));}}
+                >
+                    <option value='option2' style={{color:"black",bgColor:"grey"}}>extra large</option>
+                    <option value='option1' style={{color:"black",bgColor:"grey"}}>large</option>
+                    <option value='option2' style={{color:"black",bgColor:"grey"}}>medium</option>
+                    <option value='option3' style={{color:"black",bgColor:"grey"}}>small</option>
+                    
+                </Select>
+            </FormControl>
+            
+            <FormControl
+                display="flex"
+                flexDirection="column"
+                alignItems="center"
+                
+            >
+                <FormLabel
+                    w="300px"
+                    color="black"
+                    pl="10px"
+                >Waste Bag Weekly Count</FormLabel>
+                <NumberInput>
+                    <NumberInputField w="300px"
+                    bgColor="grey"
+                    onChange={(e)=>{setValues((prevValues) => ({
+                        ...prevValues,
+                        Wbwc:e.target.value 
+                      }));}}/>
+                    <NumberInputStepper>
+                        <NumberIncrementStepper />
+                        <NumberDecrementStepper />
+                    </NumberInputStepper>
+                </NumberInput>
+            </FormControl>
+        
+        </Box>:null}
+        {input===3?<Box
+         w="100%"
+         h="200px"
+         display="flex"
+         flexDirection="row"
+         justifyContent="space-between"
+         alignItems="center"
+        >
+            <FormControl
+            display="flex"
+            flexDirection="column"
+            alignItems="center"
+                
+            >
+                <FormLabel
+                    w="300px"
+                    color="black"
+                    pl="10px"
+                >How Long TV PC Daily Hour</FormLabel>
+                <NumberInput>
+                    <NumberInputField w="300px"
+                    bgColor="grey"
+                    onChange={(e)=>{setValues((prevValues) => ({
+                        ...prevValues,
+                        Tv:e.target.value 
+                      }));}}/>
+                    <NumberInputStepper>
+                        <NumberIncrementStepper />
+                        <NumberDecrementStepper />
+                    </NumberInputStepper>
+                </NumberInput>
+            </FormControl>
+            
+            <FormControl
+                display="flex"
+                flexDirection="column"
+                alignItems="center"
+                
+            >
+                <FormLabel
+                    w="300px"
+                    color="black"
+                    pl="10px"
+                >How Many New Clothes Monthly</FormLabel>
+                 <NumberInput>
+                    <NumberInputField w="300px"
+                    bgColor="grey"
+                    onChange={(e)=>{setValues((prevValues) => ({
+                        ...prevValues,
+                       NewClothes:e.target.value 
+                      }));}}/>
+                    <NumberInputStepper>
+                        <NumberIncrementStepper />
+                        <NumberDecrementStepper />
+                    </NumberInputStepper>
+                </NumberInput>
+            </FormControl>
+        
+        </Box>:null}
+        {input===3?<Box
+         w="100%"
+         h="200px"
+         display="flex"
+         flexDirection="row"
+         justifyContent="space-between"
+         alignItems="center"
+        >
+            <FormControl
+                display="flex"
+                flexDirection="column"
+                alignItems="center"
+                
+            >
+                <FormLabel
+                    w="300px"
+                    color="black"
+                    pl="10px"
+                >How Long Internet Daily Hour</FormLabel>
+                <NumberInput>
+                    <NumberInputField w="300px"
+                    bgColor="grey"
+                    onChange={(e)=>{setValues((prevValues) => ({
+                        ...prevValues,
+                        InternetDaily:e.target.value 
+                      }));}}/>
+                    <NumberInputStepper>
+                        <NumberIncrementStepper />
+                        <NumberDecrementStepper />
+                    </NumberInputStepper>
+                </NumberInput>
+            </FormControl>
+            
+            
+        
+        </Box>:null}
+
+        <Box
+            w="100%"
+            display="flex"
+            flexDirection="row"
+            justifyContent="space-between"
+            alignItems="center"
+            p="20px"
+           
+        >
+            <Box
+                display="flex"
+                justifyContent="flex-start"
+                alignItems="center"
+            >
+                {input!==1?<Button
+                    colorScheme='teal'
+                    size="md"
+                    onClick={()=>{
+                        input>=1?setInput(input-1):null
+                    }}
+                >
+                    Previous
+                </Button>:null}
+            </Box>
+            <Box
+                   display="flex"
+                   justifyContent="flex-end"
+                   alignItems="center"
+            >
+                {input!==3?<Button
+                    colorScheme='teal'
+                    size="md"
+                    pl="30px"
+                    pr="30px"
+                    onClick={()=>{
+                        input<=3?setInput(input+1):null
+                    }}
+                >
+                    Next
+                </Button>:null}
+                {input===3?<Button
+                    colorScheme='teal'
+                    size="md"
+                    pl="30px"
+                    pr="30px"
+                    onClick={()=>{
+                        input<=3?setInput(input+1):null
+                    }}
+                >
+                    Submit
+                </Button>:null}
+            </Box>
+           
+            
+        </Box>
       </Box>
     </Box>
   );
