@@ -1,0 +1,28 @@
+/* Corrected styles */
+#navContainer {
+    margin: 0;
+    max-width: 1500px;
+    background-color: rgb(24, 33, 208);
+    padding: 10px; /* Optional padding */
+    align-items: center;
+  }
+  
+  #list {
+    list-style-type: none;
+    display: flex;
+    justify-content: space-around; /* Spacing between items */
+    padding: 0;
+    margin: 0;
+  }
+  
+  #list li {
+    padding: 10px;
+    font-size: 1.2rem;
+    cursor: pointer; /* Optional: Makes list items look clickable */
+  }
+  
+  #list li:hover {
+    background-color: lightgray; /* Optional: Hover effect */
+    border-radius: 5px;
+  }
+  
