@@ -25,8 +25,7 @@ function App() {
               </Routes>
           
             </Router>
-          </ValuesContext>
-          
+          </ValuesContext> 
         </AuthContext>
      
       </ChakraProvider>

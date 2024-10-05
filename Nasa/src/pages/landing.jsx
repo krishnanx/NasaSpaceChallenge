@@ -1,17 +1,38 @@
 import './landing.css';
-
+import { Button } from '@chakra-ui/react';
+import { useContext } from 'react';
+import { Authentication } from '../Components/contexts/AuthContext';
 const Landing = () => {
-  
+  const [user,setUser] = useContext(Authentication)
+  const HandleGetStarted = () =>{
+    if(user){
+        navigate("/Dashboard")
+    }
+    else{
+      console.log("sign in ")
+      
+    }
+  }
   return (
     
     <div className="cont">
       <section id="features" className="features-section">
         <div className="container">
-          <h2>Features</h2>
+          
           <div className="features">
             <div className="feature-box">
               <h3>Carbon Calculator</h3>
               <p>Easily calculate your carbon footprint based on your daily activities.</p>
+              {<Button
+                  colorScheme='teal'
+                  size = "md"
+                  onClick={()=>{
+                HandleGetStarted()
+                }}
+                m="10px"
+              >
+                Get Started
+              </Button>}
             </div>
             <div className="feature-box">
               <h3>Track Progress</h3>
