@@ -82,7 +82,7 @@ function Navbar() {
       <ul id="list">
         
         <li>Home</li>
-        <li>About</li>
+        <li><a href="#about">About</a></li>
        
       </ul>
       <Box
