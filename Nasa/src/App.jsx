@@ -1,5 +1,5 @@
 import { useState } from 'react'
-
+import Navbar from './Components/navbar/Navbar'
 import './App.css'
 
 function App() {
@@ -7,6 +7,9 @@ function App() {
 
   return (
     <>
+      <ChakraProvider>
+        <Navbar/>
+      </ChakraProvider>
       
     </>
   )
