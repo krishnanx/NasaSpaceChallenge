@@ -13,6 +13,51 @@ const Landing = () => {
       
     }
   }
+
+  const handleSendData = async () => {
+    const dataToSend = {
+      "Body Type": 1,
+      "Sex": 1,
+      "Diet": 2,
+      "How Often Shower": 1,
+      "Heating Energy Source": 2,
+      "Transport": 1,
+      "Vehicle Type": 2,
+      "Monthly Grocery Bill": 1,
+      "Frequency of Traveling by Air": 2,
+      "Vehicle Monthly Distance Km": 1,
+      "Waste Bag Size": 2,
+      "Waste Bag Weekly Count": 1,
+      "How Long TV PC Daily Hour": 2,
+      "How Many New Clothes Monthly": 1,
+      "How Long Internet Daily Hour": 3,
+    }; // Example data
+  
+    try {
+      console.log("Loading...");
+      const response = await fetch('/api/send-data', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(dataToSend),
+      });
+  
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+  
+      const data = await response.json();
+      console.log('Response from server:', data);
+      // Handle success (e.g., update the UI, show a success message, etc.)
+    } catch (error) {
+      console.error('Error sending data:', error);
+      // Handle error (e.g., show error message to the user)
+    } finally {
+      console.log('Loading finished.');
+      // Reset loading state or perform other cleanup if needed
+    }
+  };
   return (
     
     <div className="cont">
