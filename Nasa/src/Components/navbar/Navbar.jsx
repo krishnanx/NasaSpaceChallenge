@@ -31,8 +31,15 @@ function Navbar() {
         navigate("/Dashboard")
     }
     else{
-      HandleSignin()
-      navigate("/Dashboard")
+      try{
+        HandleSignin()
+          
+        
+      }
+      catch(error){
+        console.log(error)
+      }
+      
     }
   }
   const HandleSignin = async() =>{
@@ -58,6 +65,9 @@ function Navbar() {
       
   } catch (error) {
     console.log("error:", error)
+  }
+  finally{
+    navigate("/Dashboard")
   }
   
   }

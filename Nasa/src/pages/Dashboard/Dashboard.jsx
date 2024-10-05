@@ -1,6 +1,6 @@
-import React from 'react';
-import { Box } from '@chakra-ui/react';
-
+import React, { useContext } from 'react';
+import { Box ,Select,FormControl,FormLabel,NumberInput,NumberInputStepper,NumberIncrementStepper,NumberInputField,NumberDecrementStepper} from '@chakra-ui/react';
+import {Value} from '../../Components/contexts/ValuesContext';
 const Dashboard = () => {
   const theme = {
     width: "100%",
@@ -15,6 +15,7 @@ const Dashboard = () => {
     backgroundSize: "40px 60px",
     color: "white"  // Ensures the text is visible against the dark background
   };
+  const [values,setValues] = useContext(Value)
 
   return (
     <Box
@@ -30,7 +31,12 @@ const Dashboard = () => {
       alignItems="center"
     >
       <Box
-        width="490px"
+        display = "flex"
+        flexDirection="column"
+        pt="20px"
+        justifyContent="space-evenly"
+        alignItems="center"
+        width="690px"
         height="404px"
         bg="rgb(223, 225, 235)"
         borderRadius="50px"
@@ -49,6 +55,110 @@ const Dashboard = () => {
 
        
       >
+        <Box
+         w="100%"
+         h="200px"
+         display="flex"
+         flexDirection="row"
+         justifyContent="space-between"
+         alignItems="center"
+        >
+                <FormControl
+                display="flex"
+                flexDirection="column"
+                alignItems="center"
+                
+            >
+                <FormLabel
+                    w="300px"
+                    color="black"
+                    pl="10px"
+                >Diet</FormLabel>
+                <Select placeholder='Select option' w="300px"
+                    bgColor="grey"
+                >
+                    <option value='option1' 
+                        style={{color:"black",bgColor:"grey"}}
+                    >vegetarian</option>
+                    <option value='option2' style={{color:"black",bgColor:"grey"}}>pescatarian</option>
+                    <option value='option3' style={{color:"black",bgColor:"grey"}}>omnivore</option>
+                    <option value='option3' style={{color:"black",bgColor:"grey"}}>vegan</option>
+                </Select>
+            </FormControl>
+            
+            <FormControl
+                display="flex"
+                flexDirection="column"
+                alignItems="center"
+                
+            >
+                <FormLabel
+                    w="300px"
+                    color="black"
+                    pl="10px"
+                >How Often do you Shower?</FormLabel>
+                <Select placeholder='Select option' w="300px"
+                    bgColor="grey"
+                >
+                    <option value='option1' style={{color:"black",bgColor:"grey"}}>daily</option>
+                    <option value='option2' style={{color:"black",bgColor:"grey"}}>less frequently</option>
+                    <option value='option3' style={{color:"black",bgColor:"grey"}}>more frequently</option>
+                    <option value='option3' style={{color:"black",bgColor:"grey"}}>twice a day</option>
+                </Select>
+            </FormControl>
+        
+        </Box>
+        <Box
+         w="100%"
+         h="200px"
+         display="flex"
+         flexDirection="row"
+         justifyContent="space-between"
+         alignItems="center"
+        >
+            <FormControl
+                display="flex"
+                flexDirection="column"
+                alignItems="center"
+                
+            >
+                <FormLabel
+                    w="300px"
+                    color="black"
+                    pl="10px"
+                >Heating Energy Source</FormLabel>
+                <Select placeholder='Select option' w="300px"
+                    bgColor="grey"
+                >
+                    <option value='option1' style={{color:"black",bgColor:"grey"}}>coal</option>
+                    <option value='option2' style={{color:"black",bgColor:"grey"}}>natural gas</option>
+                    <option value='option3' style={{color:"black",bgColor:"grey"}}>wood</option>
+                    
+                </Select>
+            </FormControl>
+            
+            <FormControl
+                display="flex"
+                flexDirection="column"
+                alignItems="center"
+                
+            >
+                <FormLabel
+                    w="300px"
+                    color="black"
+                    pl="10px"
+                >Monthly Grocery Bill</FormLabel>
+                <NumberInput>
+                    <NumberInputField w="300px"
+                    bgColor="grey"/>
+                    <NumberInputStepper>
+                        <NumberIncrementStepper />
+                        <NumberDecrementStepper />
+                    </NumberInputStepper>
+                </NumberInput>
+            </FormControl>
+        
+        </Box>
         
       </Box>
     </Box>
