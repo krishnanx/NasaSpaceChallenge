@@ -7,7 +7,10 @@ function App() {
 
   return (
     <>
-      <Navbar></Navbar>
+      <ChakraProvider>
+        <Navbar/>
+      </ChakraProvider>
+      
     </>
   )
 }
