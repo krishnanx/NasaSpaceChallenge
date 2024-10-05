@@ -1,14 +1,18 @@
 import { Box, Button, Image } from '@chakra-ui/react';
 import { signInWithPopup } from "firebase/auth";
 import { useContext, useState } from "react";
+import { db } from '../Firebase/Firebase';
+import { addDoc, getDocs, setDoc,collection,doc,onSnapshot} from "firebase/firestore";
 import { auth, provider } from "../Firebase/Firebase";
 import { useNavigate,useLocation } from "react-router-dom";
 import {Authentication} from "../contexts/AuthContext"
 import "./Navbar.css";
+import React,{ useEffect } from 'react';
+import { Value } from '../contexts/ValuesContext';
 
 
-
-function Navbar() {
+const Navbar = () => {
+ 
   const theme = {
   width: "100%",
   height: "100%",
@@ -22,10 +26,31 @@ function Navbar() {
   backgroundSize: "40px 60px"
 }  
   const [email,setEmail] = useState(null) 
+  const [personal,setPersonal] = useContext(Value)
+
   const [user,setUser] = useContext(Authentication);
   const [pic,setPic] = useState(null)
   const navigate = useNavigate();
   const location = useLocation();
+  const personalSubcollectionRef = collection(db, 'Database', `${email}`, 'personal');
+  const carbonFootprintSubcollectionRef = collection(db, 'Database',` ${email}`, 'carbon footprint');
+  useEffect(()=>{
+    try{
+      onSnapshot(personalSubcollectionRef, (snapshot) => {
+        const docs = snapshot.docs
+  
+        console.log(docs[0]._document.data.value.mapValue.fields)
+          
+        
+        ////console.log(todo)
+      })
+    }
+    catch(error){
+      console.log(error)
+    }
+    
+   },[user])
+  
   const HandleGetStarted = () =>{
     if(email){
         navigate("/Dashboard")
@@ -54,9 +79,12 @@ function Navbar() {
         setEmail(user.email)
         setUser(user)
         setPic(user.photoURL)
+        
         try {
           setPic(user.photoURL);
-            console.log(pic)
+          //console.log(pic)
+          
+          console.log("hi")
         } catch (error) {
           console.log("error",error)
         }
@@ -67,7 +95,10 @@ function Navbar() {
     console.log("error:", error)
   }
   finally{
+    
+
     navigate("/Dashboard")
+
   }
   
   }
