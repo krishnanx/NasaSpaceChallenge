@@ -333,3 +333,11 @@ footer {
     text-align: center;       /* Optional: Center text inside the card */
 }
 
+#cc{
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-size: x-large;
+}
+#content{
+  font-size: large;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
