@@ -1,8 +1,8 @@
-import React,{useEffect, useState} from "react";
+import { Box, Button, Image } from '@chakra-ui/react';
+import { signInWithPopup } from "firebase/auth";
+import { useState } from "react";
+import { auth, provider } from "../Firebase/Firebase";
 import "./Navbar.css";
-import { Button, ButtonGroup ,Image,Box} from '@chakra-ui/react'
-import { getAuth,signInWithPopup,setPersistence ,browserSessionPersistence,signOut} from "firebase/auth";
-import { auth,provider } from "../Firebase/Firebase";
 
 
 
@@ -24,9 +24,9 @@ function Navbar() {
         setPic(user.photoURL)
         try {
           setPic(user.photoURL);
-          ////console.log(pic)
+            console.log(pic)
         } catch (error) {
-          //console.log("error",error)
+          console.log("error",error)
         }
       }
       
