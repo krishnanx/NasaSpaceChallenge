@@ -2,6 +2,11 @@ import './landing.css';
 import { Button } from '@chakra-ui/react';
 import { useContext } from 'react';
 import { Authentication } from '../Components/contexts/AuthContext';
+import Charts from '../Components/charts/Charts';
+import CarbonDoughnutChart from '../Components/charts/CarbonDoughnutChart';
+import CO2BubbleChart from '../Components/charts/CO2BubbleChart';
+
+
 const Landing = () => {
   const [user,setUser] = useContext(Authentication)
   const HandleGetStarted = () =>{
@@ -89,6 +94,19 @@ const Landing = () => {
             </div>
           </div>
         </div>
+      </section>
+
+      <section id='chart-section'>
+        <div id='chart-bar-1'>
+          <Charts/>
+        </div>
+        <div id='chart-bar-2'>
+          <CarbonDoughnutChart/>
+        </div>
+        <div id='chart-bar-1'>
+          <CO2BubbleChart/>
+        </div>
+        
       </section>
 
       <section id="about" className="about-section">
