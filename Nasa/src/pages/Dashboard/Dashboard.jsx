@@ -692,7 +692,7 @@ const Dashboard = () => {
                     w="300px"
                     color="white"
                     pl="10px"
-                >How Long TV PC Daily Hour</FormLabel>
+                >How Long TV Daily Hour</FormLabel>
                 <NumberInput
                     value={values.Tv}
                 >
@@ -842,7 +842,7 @@ const Dashboard = () => {
             
         </Box>
       </Box>
-      <Modal  isOpen={isOpen} onClose={onClose}>
+      {<Modal  isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent
             h="500px"
@@ -879,7 +879,7 @@ const Dashboard = () => {
             
           </ModalFooter>
         </ModalContent>
-      </Modal>
+      </Modal>}
     </Box>
   );
 };
