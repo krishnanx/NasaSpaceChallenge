@@ -1,14 +1,13 @@
-// CO2BubbleChart.js
 import React from 'react';
-import { Bubble } from 'react-chartjs-2';
+import { Bar } from 'react-chartjs-2';
 import {
     Chart as ChartJS,
     Title,
     Tooltip,
     Legend,
     LinearScale,
-    PointElement,
-    LineElement,
+    CategoryScale,
+    BarElement,
 } from 'chart.js';
 
 ChartJS.register(
@@ -16,26 +15,36 @@ ChartJS.register(
     Tooltip,
     Legend,
     LinearScale,
-    PointElement,
-    LineElement
+    CategoryScale,
+    BarElement
 );
 
-const CO2BubbleChart = () => {
-    // Dummy data (replace with your data)
+const CO2BarChart = () => {
+    // Data for the bar chart
     const data = {
+        labels: [
+            'North America', 'Europe', 'Asia', 'Africa', 'South America', 'Australia'
+        ], // Labels representing continents
         datasets: [
             {
-                label: 'CO2 Emissions by Continent',
-                data: [
-                    { x: 'North America', r: 14.53, y: 15 }, // Example: (continent, emissions, radius)
-                    { x: 'Europe', r: 12.9, y: 48.5 },
-                    { x: 'Asia', r: 13.4, y: 78 },
-                    { x: 'Africa', r: 12.85, y: 85.7 },
-                    { x: 'South America', r: 14.14, y: 51.1 },
-                    { x: 'Australia', r:14.69, y:66.7  },
+                label: 'CO2 Emissions (in Billion Tons)',
+                data: [15, 48.5, 78, 85.7, 51.1, 66.7], // CO2 emission values
+                backgroundColor: [
+                    'rgba(75, 192, 192, 0.6)',
+                    'rgba(255, 99, 132, 0.6)',
+                    'rgba(54, 162, 235, 0.6)',
+                    'rgba(255, 206, 86, 0.6)',
+                    'rgba(153, 102, 255, 0.6)',
+                    'rgba(255, 159, 64, 0.6)'
+                ], // Color for each bar
+                borderColor: [
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 159, 64, 1)'
                 ],
-                backgroundColor: 'rgba(75, 192, 192, 0.6)',
-                borderColor: 'rgba(75, 192, 192, 1)',
                 borderWidth: 1,
             },
         ],
@@ -45,7 +54,6 @@ const CO2BubbleChart = () => {
         responsive: true,
         scales: {
             x: {
-                type: 'category',
                 title: {
                     display: true,
                     text: 'Continents',
@@ -76,17 +84,17 @@ const CO2BubbleChart = () => {
             title: {
                 display: true,
                 text: 'CO2 Emissions by Continent',
-                color: 'white', // Change title text color
+                color: 'white', // Change chart title color
             },
         },
         maintainAspectRatio: false,
     };
 
     return (
-        <div style={{ width: '100%', height: '300px',"marginTop":"70px"}}>
-            <Bubble data={data} options={options} />
+        <div style={{ width: '100%', height: '300px', "marginTop": "70px" }}>
+            <Bar data={data} options={options} />
         </div>
     );
 };
 
-export default CO2BubbleChart;
+export default CO2BarChart;
