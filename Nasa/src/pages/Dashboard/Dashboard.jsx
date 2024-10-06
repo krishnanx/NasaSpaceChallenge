@@ -1,11 +1,12 @@
 import React, { useContext,useEffect,useState } from 'react';
-import { Box ,Select,FormControl,FormLabel,NumberInput,NumberInputStepper,NumberIncrementStepper,NumberInputField,NumberDecrementStepper} from '@chakra-ui/react';
+import { Box ,Select,FormControl,FormLabel,NumberInput,NumberInputStepper,NumberIncrementStepper,NumberInputField,NumberDecrementStepper,Image,Button} from '@chakra-ui/react';
 import {Value} from '../../Components/contexts/ValuesContext';
 import { addDoc, getDocs, setDoc,collection,doc,onSnapshot,updateDoc} from "firebase/firestore";
-import { Button } from '@chakra-ui/react';
+
 import { db } from '../../Components/Firebase/Firebase';
 import { Authentication } from '../../Components/contexts/AuthContext';
 import { Personal } from '../../Components/contexts/PersonalContext';
+import bg from "../../assets/Images/bg.jpg"
 const Dashboard = () => {
   const theme = {
     width: "100%",
@@ -29,6 +30,60 @@ const Dashboard = () => {
     //console.log(user)
     const [sex,setSex] = useState(null)
     let personalSubcollectionRef = collection(db, 'Database', `${user.email}`, 'personal');
+    const waste_bag = {"small":0 , "medium":1 , "large":2 , "extra large":3}
+    const body_type = {"normal":0 ,"underweight":1, "overweight":2,"obese":3}
+    const sex_type = {"male":0 , "female":1}
+    const diet_map = {"vegan":1,"vegetarian":0,"pescatarian":2,"omnivore":3}
+    const shower_mapping = {'less frequently': 0, 'daily': 1, 'more frequently': 2, 'twice a day': 3}
+    const travel_air_mapping = {'never': 0, 'rarely': 1, 'frequently': 2, 'very frequently': 3}
+    const heating_map = {"electricity":0 , "natural gas":1 , "wood":2 , "coal":3}
+    const transport = {"public":0 , "private":2 , "walk/bicycle":1}
+    const vehicle_type = {"NA":0 , "hybrid":1 , "diesel":3 , "petrol":2}
+    const handleSendData = async () => {
+        const dataToSend = {
+          "Body Type":body_type[body],
+          "Sex":sex_type[sex],
+          "Diet":diet_map [values.diet],
+          "How Often Shower": shower_mapping[values.shower],
+          "Heating Energy Source": heating_map[values.heat],
+          "Transport": transport[values.Transport],
+          "Vehicle Type":vehicle_type[values.Vtype],
+          "Monthly Grocery Bill": values.Gbill,
+          "Frequency of Traveling by Air": travel_air_mapping[values.Tair],
+          "Vehicle Monthly Distance Km":[values.VmD],
+          "Waste Bag Size": waste_bag[values.Wbs],
+          "Waste Bag Weekly Count": [values.Wbwc],
+          "How Long TV PC Daily Hour": [values.Tv],
+          "How Many New Clothes Monthly": [values.NewClothes],
+          "How Long Internet Daily Hour": [values.internetDaily,]
+        }; // Example data
+      
+        try {
+          console.log("Loading...");
+          const response = await fetch('/api/send-data', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(dataToSend),
+          });
+      
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+      
+          const data = await response.json();
+          console.log('Response from server:', data);
+          // Handle success (e.g., update the UI, show a success message, etc.)
+        } catch (error) {
+          console.error('Error sending data:', error);
+          // Handle error (e.g., show error message to the user)
+        } finally {
+          console.log('Loading finished.');
+          // Reset loading state or perform other cleanup if needed
+        }
+      };
+      
     const HandleOnSubmit = () => {
         setInput(1)
         if(personal===false){
@@ -48,6 +103,7 @@ const Dashboard = () => {
             
         }
         console.log(values)
+        handleSendData()
     }
    
     
@@ -72,27 +128,31 @@ const Dashboard = () => {
     
   return (
     <Box
-      style={{
-        width: theme.width,
-        height: theme.height,
-        background: theme.background,
-        backgroundSize: theme.backgroundSize,
-        color: theme.color  // Apply the text color
-      }}
-      display="flex"
-      justifyContent="center"
-      alignItems="center"
+       
+        style={{
+            width: theme.width,
+            height: theme.height,
+            background: theme.background,
+            backgroundSize: theme.backgroundSize,
+            color: theme.color  // Apply the text color
+        }}
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
     >
       <Box
         display = "flex"
         flexDirection="column"
-        pt="20px"
+         position="relative"
+        
         justifyContent="space-evenly"
         alignItems="center"
         width="690px"
         height="404px"
         bg="rgb(223, 225, 235)"
         borderRadius="50px"
+        backdropFilter="blur(10px)"
+        zIndex={1}  // Lower z-index
         sx={{
           boxShadow: `
             rgba(0, 0, 0, 0.17) 0px -23px 25px 0px inset,
@@ -108,8 +168,23 @@ const Dashboard = () => {
 
        
       >
+        
+        {<Image
+            src = {bg}
+            alt="background"
+            position="absolute"
+            
+            w="100%"
+            borderRadius="50px"
+            filter="blur(5px)" // Set the desired blur effect
+            h="404px"
+            zIndex={5}  // Higher z-index
+        >
+            
+        </Image>}
         {input===0?
         <Box
+        zIndex={10}  
         w="100%"
         h="200px"
         display="flex"
@@ -125,7 +200,7 @@ const Dashboard = () => {
            >
                <FormLabel
                    w="300px"
-                   color="black"
+                   color="white"
                    pl="10px"
                >Body</FormLabel>
                <Select placeholder='Select option' w="300px"
@@ -149,7 +224,7 @@ const Dashboard = () => {
            >
                <FormLabel
                    w="300px"
-                   color="black"
+                   color="white"
                    pl="10px"
                >Sex</FormLabel>
                <Select placeholder='Select option' w="300px"
@@ -163,6 +238,7 @@ const Dashboard = () => {
         </Box>
         :null}
         {input===1?<Box
+        zIndex={10} 
          w="100%"
          h="200px"
          display="flex"
@@ -178,7 +254,7 @@ const Dashboard = () => {
             >
                 <FormLabel
                     w="300px"
-                    color="black"
+                    color="white"
                     pl="10px"
                 >Diet</FormLabel>
                 <Select placeholder='Select option' w="300px"
@@ -205,7 +281,7 @@ const Dashboard = () => {
             >
                 <FormLabel
                     w="300px"
-                    color="black"
+                    color="white"
                     pl="10px"
                 >How Often do you Shower?</FormLabel>
                 <Select placeholder='Select option' w="300px"
@@ -224,12 +300,13 @@ const Dashboard = () => {
         
         </Box>:null}
         {input===1?<Box
-         w="100%"
-         h="200px"
-         display="flex"
-         flexDirection="row"
-         justifyContent="space-between"
-         alignItems="center"
+            zIndex={10} 
+            w="100%"
+            h="200px"
+            display="flex"
+            flexDirection="row"
+            justifyContent="space-between"
+            alignItems="center"
         >
             <FormControl
                 display="flex"
@@ -239,7 +316,7 @@ const Dashboard = () => {
             >
                 <FormLabel
                     w="300px"
-                    color="black"
+                    color="white"
                     pl="10px"
                 >Heating Energy Source</FormLabel>
                 <Select placeholder='Select option' w="300px"
@@ -264,7 +341,7 @@ const Dashboard = () => {
             >
                 <FormLabel
                     w="300px"
-                    color="black"
+                    color="white"
                     pl="10px"
                 >Monthly Grocery Bill</FormLabel>
                 <NumberInput>
@@ -283,12 +360,13 @@ const Dashboard = () => {
         
         </Box>:null}
         {input===2?<Box
-         w="100%"
-         h="200px"
-         display="flex"
-         flexDirection="row"
-         justifyContent="space-between"
-         alignItems="center"
+            zIndex={10} 
+            w="100%"
+            h="200px"
+            display="flex"
+            flexDirection="row"
+            justifyContent="space-between"
+            alignItems="center"
         >
             <FormControl
             display="flex"
@@ -298,7 +376,7 @@ const Dashboard = () => {
             >
                 <FormLabel
                     w="300px"
-                    color="black"
+                    color="white"
                     pl="10px"
                 >Frequency of Traveling by Air</FormLabel>
                 <Select placeholder='Select option' w="300px"
@@ -324,7 +402,7 @@ const Dashboard = () => {
             >
                 <FormLabel
                     w="300px"
-                    color="black"
+                    color="white"
                     pl="10px"
                 >Vehicle Monthly Distance Km</FormLabel>
                  <NumberInput>
@@ -344,12 +422,13 @@ const Dashboard = () => {
         </Box>:null}
       
         {input===2?<Box
-         w="100%"
-         h="200px"
-         display="flex"
-         flexDirection="row"
-         justifyContent="space-between"
-         alignItems="center"
+            zIndex={10} 
+            w="100%"
+            h="200px"
+            display="flex"
+            flexDirection="row"
+            justifyContent="space-between"
+            alignItems="center"
         >
             <FormControl
             display="flex"
@@ -359,7 +438,7 @@ const Dashboard = () => {
             >
                 <FormLabel
                     w="300px"
-                    color="black"
+                    color="white"
                     pl="10px"
                 >Transport</FormLabel>
                 <Select placeholder='Select option' w="300px"
@@ -385,7 +464,7 @@ const Dashboard = () => {
             >
                 <FormLabel
                     w="300px"
-                    color="black"
+                    color="white"
                     pl="10px"
                 >Vehicle Type</FormLabel>
                 <Select placeholder='Select option' w="300px"
@@ -408,12 +487,13 @@ const Dashboard = () => {
         </Box>:null}
         
         {input===3?<Box
-         w="100%"
-         h="200px"
-         display="flex"
-         flexDirection="row"
-         justifyContent="space-between"
-         alignItems="center"
+            zIndex={10} 
+            w="100%"
+            h="200px"
+            display="flex"
+            flexDirection="row"
+            justifyContent="space-between"
+            alignItems="center"
         >
             <FormControl
                 display="flex"
@@ -423,7 +503,7 @@ const Dashboard = () => {
             >
                 <FormLabel
                     w="300px"
-                    color="black"
+                    color="white"
                     pl="10px"
                 >Waste Bag Size</FormLabel>
                 <Select placeholder='Select option' w="300px"
@@ -449,7 +529,7 @@ const Dashboard = () => {
             >
                 <FormLabel
                     w="300px"
-                    color="black"
+                    color="white"
                     pl="10px"
                 >Waste Bag Weekly Count</FormLabel>
                 <NumberInput>
@@ -468,12 +548,13 @@ const Dashboard = () => {
         
         </Box>:null}
         {input===4?<Box
-         w="100%"
-         h="200px"
-         display="flex"
-         flexDirection="row"
-         justifyContent="space-between"
-         alignItems="center"
+            zIndex={10} 
+            w="100%"
+            h="200px"
+            display="flex"
+            flexDirection="row"
+            justifyContent="space-between"
+            alignItems="center"
         >
             <FormControl
             display="flex"
@@ -483,7 +564,7 @@ const Dashboard = () => {
             >
                 <FormLabel
                     w="300px"
-                    color="black"
+                    color="white"
                     pl="10px"
                 >How Long TV PC Daily Hour</FormLabel>
                 <NumberInput>
@@ -508,7 +589,7 @@ const Dashboard = () => {
             >
                 <FormLabel
                     w="300px"
-                    color="black"
+                    color="white"
                     pl="10px"
                 >How Many New Clothes Monthly</FormLabel>
                  <NumberInput>
@@ -527,12 +608,13 @@ const Dashboard = () => {
         
         </Box>:null}
         {input===4?<Box
-         w="100%"
-         h="200px"
-         display="flex"
-         flexDirection="row"
-         justifyContent="space-between"
-         alignItems="center"
+            zIndex={10} 
+            w="100%"
+            h="200px"
+            display="flex"
+            flexDirection="row"
+            justifyContent="space-between"
+            alignItems="center"
         >
             <FormControl
                 display="flex"
@@ -542,7 +624,7 @@ const Dashboard = () => {
             >
                 <FormLabel
                     w="300px"
-                    color="black"
+                    color="white"
                     pl="10px"
                 >How Long Internet Daily Hour</FormLabel>
                 <NumberInput>
@@ -564,6 +646,7 @@ const Dashboard = () => {
         </Box>:null}
 
         <Box
+            zIndex={10} 
             w="100%"
             display="flex"
             flexDirection="row"
@@ -573,6 +656,7 @@ const Dashboard = () => {
            
         >
             <Box
+                zIndex={10} 
                 display="flex"
                 justifyContent="flex-start"
                 alignItems="center"
@@ -588,9 +672,10 @@ const Dashboard = () => {
                 </Button>:null}
             </Box>
             <Box
-                   display="flex"
-                   justifyContent="flex-end"
-                   alignItems="center"
+                zIndex={10} 
+                display="flex"
+                justifyContent="flex-end"
+                alignItems="center"
             >
                 {input!==4?<Button
                     colorScheme='teal'
