@@ -2,12 +2,15 @@ import React, { useContext,useEffect,useState } from 'react';
 import { Box ,Select,FormControl,FormLabel,NumberInput,NumberInputStepper,NumberIncrementStepper,NumberInputField,NumberDecrementStepper,Image,Button} from '@chakra-ui/react';
 import {Value} from '../../Components/contexts/ValuesContext';
 import { addDoc, getDocs, setDoc,collection,doc,onSnapshot,updateDoc} from "firebase/firestore";
+import { useToast } from '@chakra-ui/react'
 
 import { db } from '../../Components/Firebase/Firebase';
 import { Authentication } from '../../Components/contexts/AuthContext';
 import { Personal } from '../../Components/contexts/PersonalContext';
 import bg from "../../assets/Images/bg.jpg"
+
 const Dashboard = () => {
+  const toast = useToast()
   const theme = {
     width: "100%",
     height: "700px",
@@ -39,6 +42,7 @@ const Dashboard = () => {
     const heating_map = {"electricity":0 , "natural gas":1 , "wood":2 , "coal":3}
     const transport = {"public":0 , "private":2 , "walk/bicycle":1}
     const vehicle_type = {"NA":0 , "hybrid":1 , "diesel":3 , "petrol":2}
+
     const handleSendData = async () => {
         const dataToSend = {
           "Body Type":body_type[body],
@@ -58,8 +62,29 @@ const Dashboard = () => {
           "How Long Internet Daily Hour": parseInt(values.InternetDaily)
         }; // Example data
         console.log(dataToSend)
+        const hasNullValues = (data) => {
+            for (const key in data) {
+                if (data[key] === null) {
+                    return true; // Return true if any value is null
+                }
+            }
+            return false; // Return false if no null values are found
+        };
+        
         try {
           console.log("Loading...");
+          console.log(hasNullValues(dataToSend))
+          if (!hasNullValues(dataToSend)){
+            toast({
+                position:"bottom-left",
+                title: 'Enter Data',
+                description: "Please input all data",
+                status: 'warning',
+                duration: 9000,
+                isClosable: true,
+              })
+              return;
+          }
           const response = await fetch('/api/send-data', {
             method: 'POST',
             headers: {
