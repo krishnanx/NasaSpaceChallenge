@@ -4,7 +4,7 @@ import { useContext, useRef, useState } from "react";
 import { db } from '../Firebase/Firebase';
 import { addDoc, getDocs, setDoc,collection,doc,onSnapshot} from "firebase/firestore";
 import { auth, provider } from "../Firebase/Firebase";
-import { useNavigate,useLocation } from "react-router-dom";
+import { useNavigate,useLocation, Navigate } from "react-router-dom";
 import {Authentication} from "../contexts/AuthContext"
 import "./Navbar.css";
 import React,{ useEffect } from 'react';
@@ -166,8 +166,17 @@ const Navbar = () => {
       </div>
       
       <ul id="list">
+        
+        {user?<>
+          <li onClick={()=>navigate("/")}>Home</li>
+          <li onClick={()=>navigate("/Dashboard")}>DashBoard</li>
+          <li onClick={()=>navigate("/Leaderboard")}>LeaderBoard</li>
+        </>:<>
         <li onClick={scrollToTop}>Home</li>
         <li><a href="#about">About</a></li>
+        </>
+        }
+        
       </ul>
       <Box
         display="flex"

@@ -8,6 +8,7 @@ import Protected from './Components/Protected/Protected'
 import AuthContext from './Components/contexts/AuthContext'
 import ValuesContext from './Components/contexts/ValuesContext'
 import PersonalContext from './Components/contexts/PersonalContext'
+import Leaderboard from './pages/Leaderboard/Leaderboard'
 function App() {
  
 
@@ -25,6 +26,7 @@ function App() {
                   <Route path='/Dashboard' element={<Protected>
                       <Dashboard />
                     </Protected>}/>
+                  <Route path='/Leaderboard' element={<Leaderboard/>}/>
                   
                 </Routes>
           
