@@ -145,9 +145,9 @@ const Dashboard = () => {
           const docData = {
               Footprint: Cvalue+Nvalue
             };
-            //console.log(docs.docs[0].id)
-            let carbonFootprintSubcollection = doc(db, 'Database',`${user.email}`, 'carbonfootprint',docs);
-            updateDoc(carbonFootprintSubcollection, docData)
+            console.log(docs)
+            const docRef = doc(db, 'Database',`${user.email}`, 'carbonfootprint',docs);
+            updateDoc(docRef, docData)
                   .then(() => {
                       console.log("Document successfully updated!");
                       
