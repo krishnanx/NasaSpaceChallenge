@@ -1,4 +1,6 @@
-* {
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap');
+
+*{
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -360,4 +362,14 @@ footer {
   width: 30%;
   display: flex;
   
+}
+#slogan{
+  font-family:"Outfit", sans-serif;
+  font-size: xx-large;
+  color: #28a745;
+  font-size: 70px;
+  
+}
+#slogan_con{
+  margin-top: -100px;
 }
