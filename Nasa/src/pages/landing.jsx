@@ -45,7 +45,7 @@ const Landing = () => {
                 Get Started
               </Button>}
             </div>
-            <div className="feature-box">
+            <div className="feature-box" onClick={handleSendData}>
               <h3>Track Progress</h3>
               <p>Monitor your emissions over time and see how your habits impact the environment.</p>
             </div>
