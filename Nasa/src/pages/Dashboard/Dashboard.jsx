@@ -1,19 +1,31 @@
 import React, { useContext,useEffect,useState } from 'react';
-import { Box ,Select,FormControl,FormLabel,NumberInput,NumberInputStepper,NumberIncrementStepper,NumberInputField,NumberDecrementStepper,Image,Button} from '@chakra-ui/react';
+import { Box,Select,FormControl,FormLabel,NumberInput,NumberInputStepper,NumberIncrementStepper,NumberInputField,NumberDecrementStepper,Image,Button, useDisclosure} from '@chakra-ui/react';
 import {Value} from '../../Components/contexts/ValuesContext';
 import { addDoc, getDocs, setDoc,collection,doc,onSnapshot,updateDoc} from "firebase/firestore";
 import { useToast } from '@chakra-ui/react'
-
+import tree from "../../assets/Images/tree.jpg"
 import { db } from '../../Components/Firebase/Firebase';
 import { Authentication } from '../../Components/contexts/AuthContext';
 import { Personal } from '../../Components/contexts/PersonalContext';
 import bg from "../../assets/Images/bg.jpg"
+import {
+    Modal,
+    ModalOverlay,
+    ModalContent,
+    ModalHeader,
+    ModalFooter,
+    ModalBody,
+    ModalCloseButton,
+    Text
+  } from '@chakra-ui/react'
 
 const Dashboard = () => {
   const toast = useToast()
   const [Cvalue,setCurrent_value] = useState("")
+  const [data,setData] = useState("")
   const [Nvalue,setNew_value] = useState("")
   const [docs,setDocs] = useState("")
+  const { isOpen, onOpen, onClose } = useDisclosure()
   const theme = {
     width: "100%",
     height: "735px",
@@ -103,9 +115,9 @@ const Dashboard = () => {
       
           const data = await response.json();
           console.log('Response from server:', data);
+          setData(data)
           
-          
-          let carbonFootprintSubcollectionRef = collection(db, 'Database',`${user.email}`, 'carbonfootprint');
+          /*let carbonFootprintSubcollectionRef = collection(db, 'Database',`${user.email}`, 'carbonfootprint');
           onSnapshot(carbonFootprintSubcollectionRef,(snapshot)=>{
             let carbonFootprintSubcollectionRef = collection(db, 'Database',`${user.email}`, 'carbonfootprint');
             const docs = snapshot;
@@ -139,23 +151,8 @@ const Dashboard = () => {
                 return 0;
               }
           }
-          )
+          )*/
           
-         
-          const docData = {
-              Footprint: Cvalue+Nvalue
-            };
-            console.log(docs)
-            const docRef = doc(db, 'Database',`${user.email}`, 'carbonfootprint',docs);
-            updateDoc(docRef, docData)
-                  .then(() => {
-                      console.log("Document successfully updated!");
-                      
-                  })
-                  .catch((error) => {
-                      console.error("Error updating document: ", error);
-                      });
-        
           // Handle success (e.g., update the UI, show a success message, etc.)
         } catch (error) {
           console.error('Error sending data:', error);
@@ -165,7 +162,7 @@ const Dashboard = () => {
                 
           console.log('Loading finished.');
           // Reset loading state or perform other cleanup if needed
-          console.log(user.email)
+          
             
           setValues({
             diet:"null",
@@ -187,9 +184,9 @@ const Dashboard = () => {
       
     const HandleOnSubmit = () => {
         setInput(1)
-       
-        handleSendData()
         
+        handleSendData()
+        onOpen()
         if(personal===false){
             const personalDocumentRef = collection(db, 'Database', `${user.email}`, 'personal', id);
 
@@ -845,6 +842,44 @@ const Dashboard = () => {
             
         </Box>
       </Box>
+      <Modal  isOpen={isOpen} onClose={onClose}>
+        <ModalOverlay />
+        <ModalContent
+            h="500px"
+        >
+            
+          <ModalHeader
+            pl="100px"
+          >
+            
+            YOUR CARBON FOOTPRINT</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody
+            p="0"
+            m="0"
+          >
+            <Image w="450px" h= "380px" src={tree} position="relative"></Image>
+            <Text fontWeight='bold' fontSize="20px" color="black" position="absolute" top="100px" right="100px">
+                {data.data_sent.toFixed(3)} Kg CO<sub>2</sub> Per Month
+            </Text>
+            <Text fontWeight='bold' fontSize="20px" color="black" position="absolute" top="400px" right="150px">
+                You owe {Math.floor(data.data_sent / 500)} Trees
+            </Text>
+            
+          </ModalBody>
+
+          <ModalFooter
+                p="0"
+                m="0"
+                h="60px"
+          >
+            <Button colorScheme='blue' mr={3} onClick={onClose}>
+              Close
+            </Button>
+            
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
     </Box>
   );
 };
