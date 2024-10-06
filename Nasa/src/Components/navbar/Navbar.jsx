@@ -26,35 +26,17 @@ const Navbar = () => {
     linear-gradient(90deg, #2c3539 2%, #282828 0, #282828 98%, #2c3539 0%) 0 0 #282828`,
   backgroundSize: "40px 60px"
 }  
-  const [email,setEmail] = useState(null) 
+  const [email,setEmail] = useState(null)   
+
  
-  const[personal,setPersonal] = useContext(Personal)
+  const[personal,setPersonal] = useState("")
   const [user,setUser] = useContext(Authentication);
   const [pic,setPic] = useState(null)
   const navigate = useNavigate();
   const location = useLocation();
-  const personalSubcollectionRef = collection(db, 'Database', `${email}`, 'personal');
-  const carbonFootprintSubcollectionRef = collection(db, 'Database',` ${email}`, 'carbon footprint');
-  useEffect(()=>{
-    try{
-      if(user!==null){
-      onSnapshot(personalSubcollectionRef, (snapshot) => {
-        const docs = snapshot.docs
   
-        console.log(docs[0]._document.data.value.mapValue.fields)
-        setPersonal(docs[0]._document.data.value.mapValue.fields)
-       
-        
-        
-        ////console.log(todo)
-      })
-      }
-    }
-    catch(error){
-      console.log(error)
-    }
-    
-   },[user])
+  const carbonFootprintSubcollectionRef = collection(db, 'Database',` ${email}`, 'carbon footprint');
+  
  
   const HandleGetStarted = () =>{
     if(email){
@@ -91,11 +73,39 @@ const Navbar = () => {
           //console.log(pic)
           console.log("hi")
           console.log(pic)
+          const personalSubcollectionRef = collection(db, 'Database',`${users.email}`, 'personal');
+          const subcollectionRef = collection(db,'Database')
+          onSnapshot(personalSubcollectionRef,(snapshot)=>{
+            const docs = snapshot;
+            console.log(docs)
+            const docData = {
+                body:"none",
+                sex:"none"
+          };
+            if(docs.empty){
+              console.log(true)
+              try{
+                const docRef = addDoc(personalSubcollectionRef,docData)
+                console.log("Document written with ID: ", docRef.id);
+              }
+              catch(error){
+                console.log(error)
+              }
+             
+            }
+            else{
+              console.log(false)
+            }
+          })
+        
+          
+          
         } catch (error) {
           console.log("error",error)
         }
-      }
       
+      }
+    
       
   } catch (error) {
     console.log("error:", error)
@@ -126,7 +136,11 @@ const Navbar = () => {
       
       <ul id="list">
         
-        <li>Home</li>
+        <li>
+          <a onClick={()=>navigate('/')}>
+            Home
+          </a>
+        </li>
         <li><a href="#about">About</a></li>
        
       </ul>
