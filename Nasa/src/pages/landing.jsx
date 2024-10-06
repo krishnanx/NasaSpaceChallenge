@@ -6,19 +6,24 @@ import Charts from '../Components/charts/Charts';
 import CarbonDoughnutChart from '../Components/charts/CarbonDoughnutChart';
 import CO2BubbleChart from '../Components/charts/CO2BubbleChart';
 
+import { useNavigate } from 'react-router-dom';
 
 const Landing = () => {
   const [user,setUser] = useContext(Authentication)
+  const navigate = useNavigate();
   const HandleGetStarted = () =>{
+
     if(user){
-        navigate("/Dashboard")
+      setTimeout(() => {
+        navigate('/Dashboard')
+      }, 2000);
     }
     else{
       console.log("sign in ")
       
     }
   }
-
+ 
   const handleSendData = async () => {
     const dataToSend = {
       "Body Type": 1,
