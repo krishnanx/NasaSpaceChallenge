@@ -50,14 +50,14 @@ const Dashboard = () => {
           "Vehicle Type":vehicle_type[values.Vtype],
           "Monthly Grocery Bill": values.Gbill,
           "Frequency of Traveling by Air": travel_air_mapping[values.Tair],
-          "Vehicle Monthly Distance Km":[values.VmD],
+          "Vehicle Monthly Distance Km":values.VmD,
           "Waste Bag Size": waste_bag[values.Wbs],
-          "Waste Bag Weekly Count": [values.Wbwc],
-          "How Long TV PC Daily Hour": [values.Tv],
-          "How Many New Clothes Monthly": [values.NewClothes],
-          "How Long Internet Daily Hour": [values.internetDaily,]
+          "Waste Bag Weekly Count": values.Wbwc,
+          "How Long TV PC Daily Hour": values.Tv,
+          "How Many New Clothes Monthly": values.NewClothes,
+          "How Long Internet Daily Hour": values.InternetDaily
         }; // Example data
-      
+        console.log(dataToSend)
         try {
           console.log("Loading...");
           const response = await fetch('/api/send-data', {
@@ -116,11 +116,14 @@ const Dashboard = () => {
             setId(docs[0].id)
             console.log(docs[0]._document.data.value.mapValue.fields)
             if(docs[0]._document.data.value.mapValue.fields.body.stringValue==="none"){
+              
                 console.log("lik")
                 setInput(0);
                 setPersonal(false)
             }
             else{
+                setBody(docs[0]._document.data.value.mapValue.fields.body.stringValue)
+                setSex(docs[0]._document.data.value.mapValue.fields.sex.stringValue)
                 setPersonal(true)
             }
         })}
