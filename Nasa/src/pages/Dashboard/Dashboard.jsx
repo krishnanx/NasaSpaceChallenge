@@ -859,12 +859,12 @@ const Dashboard = () => {
             m="0"
           >
             <Image w="450px" h= "380px" src={tree} position="relative"></Image>
-            <Text fontWeight='bold' fontSize="20px" color="black" position="absolute" top="100px" right="100px">
+           {data.data_sent? <Text fontWeight='bold' fontSize="20px" color="black" position="absolute" top="100px" right="100px">
                 {data.data_sent.toFixed(3)} Kg CO<sub>2</sub> Per Month
-            </Text>
-            <Text fontWeight='bold' fontSize="20px" color="black" position="absolute" top="400px" right="150px">
+            </Text>:null}
+            {data.data_sent?<Text fontWeight='bold' fontSize="20px" color="black" position="absolute" top="400px" right="150px">
                 You owe {Math.floor(data.data_sent / 500)} Trees
-            </Text>
+            </Text>:null}
             
           </ModalBody>
 
