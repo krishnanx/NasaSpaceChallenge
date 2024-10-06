@@ -48,14 +48,14 @@ const Dashboard = () => {
           "Heating Energy Source": heating_map[values.heat],
           "Transport": transport[values.Transport],
           "Vehicle Type":vehicle_type[values.Vtype],
-          "Monthly Grocery Bill": values.Gbill,
+          "Monthly Grocery Bill": parseInt(values.Gbill),
           "Frequency of Traveling by Air": travel_air_mapping[values.Tair],
-          "Vehicle Monthly Distance Km":values.VmD,
+          "Vehicle Monthly Distance Km":parseInt(values.VmD),
           "Waste Bag Size": waste_bag[values.Wbs],
-          "Waste Bag Weekly Count": values.Wbwc,
-          "How Long TV PC Daily Hour": values.Tv,
-          "How Many New Clothes Monthly": values.NewClothes,
-          "How Long Internet Daily Hour": values.InternetDaily
+          "Waste Bag Weekly Count": parseInt(values.Wbwc),
+          "How Long TV PC Daily Hour": parseInt(values.Tv),
+          "How Many New Clothes Monthly": parseInt(values.NewClothes),
+          "How Long Internet Daily Hour": parseInt(values.InternetDaily)
         }; // Example data
         console.log(dataToSend)
         try {
