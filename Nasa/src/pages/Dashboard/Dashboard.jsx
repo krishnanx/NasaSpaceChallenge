@@ -13,7 +13,7 @@ const Dashboard = () => {
   const toast = useToast()
   const theme = {
     width: "100%",
-    height: "700px",
+    height: "735px",
     background: `
       radial-gradient(circle farthest-side at 0% 50%, #282828 23.5%, rgba(255, 170, 0, 0) 0) 21px 30px,
       radial-gradient(circle farthest-side at 0% 50%, #2c3539 24%, rgba(240, 166, 17, 0) 0) 19px 30px,

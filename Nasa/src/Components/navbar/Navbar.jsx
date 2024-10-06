@@ -196,7 +196,11 @@ const Navbar = () => {
       
       <ul id="list">
         
-        <li>Home</li>
+        <li><a
+          onClick={()=>navigate('/')}
+        >
+          Home
+          </a></li>
         <li><a href="#about">About</a></li>
       </ul>
       <Box
