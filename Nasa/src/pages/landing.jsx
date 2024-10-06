@@ -30,6 +30,10 @@ const Landing = () => {
       <section id="features" className="features-section">
         <div className="container">
           
+<div id='slogan_con'>
+  <h1 id='slogan'>" Track Today , <br />Sustain Tomorrow "</h1>
+</div><br /><br /><br /><br />
+
           <div className="features">
             <div className="feature-box">
               <h3>Carbon Calculator</h3>
@@ -68,7 +72,7 @@ const Landing = () => {
           <CO2BubbleChart/>
         </div>
         
-      </section>
+      </section><br /><br /><br /><br />
 
       <section id="about" className="about-section">
         <div className="container" id='about'>
@@ -79,7 +83,7 @@ const Landing = () => {
             we can create a more sustainable world.
           </p>
         </div>
-      </section>
+      </section><br /><br />
 
       <section id="contact" className="contact-section">
       <div class="container">
