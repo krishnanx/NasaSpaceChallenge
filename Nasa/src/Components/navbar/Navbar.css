@@ -12,6 +12,8 @@ html {
   height: 80px;
   padding: 0 20px; 
   box-sizing: border-box; 
+  background-color: black;
+  position: fixed;
 }
 
 .Left_icons {
