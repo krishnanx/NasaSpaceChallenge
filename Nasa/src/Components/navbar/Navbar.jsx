@@ -10,7 +10,7 @@ import "./Navbar.css";
 import React,{ useEffect } from 'react';
 import { Value } from '../contexts/ValuesContext';
 import { Personal } from '../contexts/PersonalContext';
-
+import logo from "../../assets/Images/logo.jpg"
 
 const Navbar = () => {
  
@@ -113,9 +113,17 @@ const Navbar = () => {
       <div
         className='Left_icons'
       >
-
+          <Image 
+            
+            src={logo} 
+            alt="logo" 
+            w="70px"
+            h="70px"
+            borderRadius="60px"
+            p="5px"
+           />
       </div>
-      <img id='logo' src="./newlogo.jpg" alt="logo" />
+      
       <ul id="list">
         
         <li>Home</li>

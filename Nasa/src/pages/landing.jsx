@@ -24,51 +24,7 @@ const Landing = () => {
     }
   }
  
-  const handleSendData = async () => {
-    const dataToSend = {
-      "Body Type": 3,
-      "Sex": 1,
-      "Diet": 0,
-      "How Often Shower": 0,
-      "Heating Energy Source": 1,
-      "Transport": 1,
-      "Vehicle Type": 0.0,
-      "Monthly Grocery Bill": 114,
-      "Frequency of Traveling by Air": 1,
-      "Vehicle Monthly Distance Km": 9,
-      "Waste Bag Size": 3,
-      "Waste Bag Weekly Count": 3,
-      "How Long TV PC Daily Hour": 9,
-      "How Many New Clothes Monthly": 38,
-      "How Long Internet Daily Hour": 5,
-    }; // Example data
-  
-    try {
-      console.log("Loading...");
-      const response = await fetch('/api/send-data', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(dataToSend),
-      });
-  
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-  
-      const data = await response.json();
-      console.log('Response from server:', data);
-      // Handle success (e.g., update the UI, show a success message, etc.)
-    } catch (error) {
-      console.error('Error sending data:', error);
-      // Handle error (e.g., show error message to the user)
-    } finally {
-      console.log('Loading finished.');
-      // Reset loading state or perform other cleanup if needed
-    }
-  };
-  return (
+ return (
     
     <div className="cont">
       <section id="features" className="features-section">
