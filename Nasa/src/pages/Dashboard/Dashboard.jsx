@@ -11,6 +11,9 @@ import bg from "../../assets/Images/bg.jpg"
 
 const Dashboard = () => {
   const toast = useToast()
+  const [Cvalue,setCurrent_value] = useState("")
+  const [Nvalue,setNew_value] = useState("")
+  const [docs,setDocs] = useState("")
   const theme = {
     width: "100%",
     height: "735px",
@@ -30,6 +33,7 @@ const Dashboard = () => {
     const [id,setId] = useState("")
     const [input,setInput ]  = useState(1);
     const [body,setBody] = useState(null)
+    
     //console.log(user)
     const [sex,setSex] = useState(null)
     let personalSubcollectionRef = collection(db, 'Database', `${user.email}`, 'personal');
@@ -74,17 +78,17 @@ const Dashboard = () => {
         try {
           console.log("Loading...");
           console.log(hasNullValues(dataToSend))
-          if (!hasNullValues(dataToSend)){
-            toast({
-                position:"bottom-left",
-                title: 'Enter Data',
-                description: "Please input all data",
-                status: 'warning',
-                duration: 9000,
-                isClosable: true,
-              })
-              return;
-          }
+        //   if (!hasNullValues(dataToSend)){
+        //     toast({
+        //         position:"bottom-left",
+        //         title: 'Enter Data',
+        //         description: "Please input all data",
+        //         status: 'warning',
+        //         duration: 9000,
+        //         isClosable: true,
+        //       })
+        //       return;
+        //   }
           const response = await fetch('/api/send-data', {
             method: 'POST',
             headers: {
@@ -99,13 +103,70 @@ const Dashboard = () => {
       
           const data = await response.json();
           console.log('Response from server:', data);
+          
+          
+          let carbonFootprintSubcollectionRef = collection(db, 'Database',`${user.email}`, 'carbonfootprint');
+          onSnapshot(carbonFootprintSubcollectionRef,(snapshot)=>{
+            let carbonFootprintSubcollectionRef = collection(db, 'Database',`${user.email}`, 'carbonfootprint');
+            const docs = snapshot;
+            console.log(docs)
+           
+              if (docs.empty) {
+                console.log(data)
+                const docData = {
+                    Footprint: data.data_sent
+                  };
+                  try{
+                    addDoc(carbonFootprintSubcollectionRef, docData)
+                        .then((docRef) => {
+                            console.log("Document written with ID: ", docRef.id);
+                        })
+                        .catch((error) => {
+                            console.error("Error adding document: ", error);
+                        });
+                  }
+                  catch(error){
+                    console.log(error)
+                  }
+               
+              }
+              else{
+                setDocs(docs.docs[0].id);
+                setCurrent_value(docs.docs[0]._document.data.value.mapValue.fields.Footprint.doubleValue)
+                setNew_value(data.data_sent)
+                
+               
+                return 0;
+              }
+          }
+          )
+          
+         
+          const docData = {
+              Footprint: Cvalue+Nvalue
+            };
+            //console.log(docs.docs[0].id)
+            let carbonFootprintSubcollection = doc(db, 'Database',`${user.email}`, 'carbonfootprint',docs);
+            updateDoc(carbonFootprintSubcollection, docData)
+                  .then(() => {
+                      console.log("Document successfully updated!");
+                      
+                  })
+                  .catch((error) => {
+                      console.error("Error updating document: ", error);
+                      });
+        
           // Handle success (e.g., update the UI, show a success message, etc.)
         } catch (error) {
           console.error('Error sending data:', error);
           // Handle error (e.g., show error message to the user)
         } finally {
+           
+                
           console.log('Loading finished.');
           // Reset loading state or perform other cleanup if needed
+          console.log(user.email)
+            
           setValues({
             diet:"null",
             shower:"null",
@@ -130,7 +191,7 @@ const Dashboard = () => {
         handleSendData()
         
         if(personal===false){
-            const personalDocumentRef = doc(db, 'Database', `${user.email}`, 'personal', id);
+            const personalDocumentRef = collection(db, 'Database', `${user.email}`, 'personal', id);
 
             // Update the document with new 'body' and 'sex' values
             updateDoc(personalDocumentRef, {
@@ -149,18 +210,18 @@ const Dashboard = () => {
        
     }
     
-    console.log(user)
+    //console.log(user)
     useEffect(()=>{
         if(user){
         onSnapshot(personalSubcollectionRef, (snapshot) => {
             const docs = snapshot.docs
-            console.log(docs)
+            //console.log(docs)
             //console.log(docs[0].id)
             setId(docs[0].id)
-            console.log(docs[0]._document.data.value.mapValue.fields)
+            //console.log(docs[0]._document.data.value.mapValue.fields)
             if(docs[0]._document.data.value.mapValue.fields.body.stringValue==="none"){
               
-                console.log("lik")
+                //console.log("lik")
                 setInput(0);
                 setPersonal(false)
             }
