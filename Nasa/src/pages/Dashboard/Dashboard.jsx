@@ -448,10 +448,10 @@ const Dashboard = () => {
                         Transport:e.target.value 
                       }));}}
                 >
-                    <option value='very frequently' style={{color:"black",bgColor:"grey"}}>very frequently</option>
-                    <option value='frequently' style={{color:"black",bgColor:"grey"}}>frequently</option>
-                    <option value='rarely' style={{color:"black",bgColor:"grey"}}>rarely</option>
-                    <option value='never' style={{color:"black",bgColor:"grey"}}>never</option>
+                    <option value='public' style={{color:"black",bgColor:"grey"}}>Public</option>
+                    <option value='private' style={{color:"black",bgColor:"grey"}}>private</option>
+                    <option value='walk/bicycle' style={{color:"black",bgColor:"grey"}}>walk/bicycle</option>
+                    
                     
                 </Select>
             </FormControl>
