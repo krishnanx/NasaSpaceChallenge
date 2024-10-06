@@ -21,25 +21,54 @@ const Dashboard = () => {
     color: "white"  // Ensures the text is visible against the dark background
   };
     const [values,setValues] = useContext(Value);
-    const [personal,setPersonal] = useContext(Personal)
+    const [personal,setPersonal] = useState("");
     const [user,setUser] = useContext(Authentication);
+    const [id,setId] = useState("")
     const [input,setInput ]  = useState(1);
     const [body,setBody] = useState(null)
     //console.log(user)
     const [sex,setSex] = useState(null)
-    const personalSubcollectionRef = collection(db, 'Database', `abhishekkrishnan2006@gmail.com`, 'personal');
+    let personalSubcollectionRef = collection(db, 'Database', `${user.email}`, 'personal');
     const HandleOnSubmit = () => {
         setInput(1)
         if(personal===false){
-            updateDoc(personalSubcollectionRef,{
-                body:body,
-                sex:sex
-              });
+            const personalDocumentRef = doc(db, 'Database', `${user.email}`, 'personal', id);
+
+            // Update the document with new 'body' and 'sex' values
+            updateDoc(personalDocumentRef, {
+                body: body,
+                sex: sex
+            })
+            .then(() => {
+                console.log("Document successfully updated!");
+            })
+            .catch((error) => {
+                console.error("Error updating document: ", error);
+            });
+            
         }
-        
         console.log(values)
     }
+   
     
+    console.log(user)
+    useEffect(()=>{
+        if(user){
+        onSnapshot(personalSubcollectionRef, (snapshot) => {
+            const docs = snapshot.docs
+            console.log(docs[0].id)
+            setId(docs[0].id)
+            console.log(docs[0]._document.data.value.mapValue.fields)
+            if(docs[0]._document.data.value.mapValue.fields.body.stringValue==="none"){
+                console.log("lik")
+                setInput(0);
+                setPersonal(false)
+            }
+            else{
+                setPersonal(true)
+            }
+        })}
+    },[user])
     
   return (
     <Box

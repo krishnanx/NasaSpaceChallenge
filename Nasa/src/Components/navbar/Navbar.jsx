@@ -76,7 +76,7 @@ const Navbar = () => {
     try {
       
       const userCredentials = await signInWithPopup(auth, provider);
-      console.log(userCredentials)
+      //console.log(userCredentials)
       const users = userCredentials.user;
       console.log(users.email)
       console.log(users)

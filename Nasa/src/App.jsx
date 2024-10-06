@@ -22,7 +22,9 @@ function App() {
                 <Navbar/>
                 <Routes>  
                   <Route path='/' element={<Landing/>}/>
-                  <Route path='/Dashboard' element={<Dashboard />}/>
+                  <Route path='/Dashboard' element={<Protected>
+                      <Dashboard />
+                    </Protected>}/>
                   
                 </Routes>
           
