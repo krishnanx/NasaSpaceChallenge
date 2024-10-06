@@ -26,21 +26,21 @@ const Landing = () => {
  
   const handleSendData = async () => {
     const dataToSend = {
-      "Body Type": 1,
+      "Body Type": 3,
       "Sex": 1,
-      "Diet": 2,
-      "How Often Shower": 1,
-      "Heating Energy Source": 2,
+      "Diet": 0,
+      "How Often Shower": 0,
+      "Heating Energy Source": 1,
       "Transport": 1,
-      "Vehicle Type": 2,
-      "Monthly Grocery Bill": 1,
-      "Frequency of Traveling by Air": 2,
-      "Vehicle Monthly Distance Km": 1,
-      "Waste Bag Size": 2,
-      "Waste Bag Weekly Count": 1,
-      "How Long TV PC Daily Hour": 2,
-      "How Many New Clothes Monthly": 1,
-      "How Long Internet Daily Hour": 3,
+      "Vehicle Type": 0.0,
+      "Monthly Grocery Bill": 114,
+      "Frequency of Traveling by Air": 1,
+      "Vehicle Monthly Distance Km": 9,
+      "Waste Bag Size": 3,
+      "Waste Bag Weekly Count": 3,
+      "How Long TV PC Daily Hour": 9,
+      "How Many New Clothes Monthly": 38,
+      "How Long Internet Daily Hour": 5,
     }; // Example data
   
     try {
@@ -89,7 +89,7 @@ const Landing = () => {
                 Get Started
               </Button>}
             </div>
-            <div className="feature-box">
+            <div className="feature-box" onClick={handleSendData}>
               <h3>Track Progress</h3>
               <p>Monitor your emissions over time and see how your habits impact the environment.</p>
             </div>
