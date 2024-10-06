@@ -5,7 +5,7 @@ import { Authentication } from '../Components/contexts/AuthContext';
 import Charts from '../Components/charts/Charts';
 import CarbonDoughnutChart from '../Components/charts/CarbonDoughnutChart';
 import CO2BubbleChart from '../Components/charts/CO2BubbleChart';
-
+import { Typewriter } from 'react-simple-typewriter';
 import { useNavigate } from 'react-router-dom';
 
 const Landing = () => {
@@ -30,9 +30,25 @@ const Landing = () => {
       <section id="features" className="features-section">
         <div className="container">
           
-<div id='slogan_con'>
-  <h1 id='slogan'>" Track Today , <br />Sustain Tomorrow "</h1>
-</div><br /><br /><br /><br />
+          <div id='slogan_con' style={{fontSize:"70px" , color:"#4CAF50",padding: 20,display:"flex" , flexDirection:"column"}}>
+            {/* <h1 id='slogan'>" Track Today , <br />Sustain Tomorrow "</h1> */}
+            <Typewriter
+               words={['Track Today!']}
+               loop={1} // set to true if you want it to loop infinitely
+               typeSpeed={50}    // Speed for typing
+               deleteSpeed={70}  // Speed for deleting
+               delaySpeed={2000} // Delay before starting to delete
+               
+            />
+            <Typewriter
+               words={['Sustainable Tomorrow']}
+               loop={1} // set to true if you want it to loop infinitely
+               typeSpeed={70}    // Speed for typing
+               deleteSpeed={60}  // Speed for deleting
+               delaySpeed={2000} // Delay before starting to delete
+            />
+          </div>
+            
 
           <div className="features">
             <div className="feature-box">

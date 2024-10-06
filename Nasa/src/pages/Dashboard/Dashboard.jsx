@@ -13,7 +13,7 @@ const Dashboard = () => {
   const toast = useToast()
   const theme = {
     width: "100%",
-    height: "700px",
+    height: "735px",
     background: `
       radial-gradient(circle farthest-side at 0% 50%, #282828 23.5%, rgba(255, 170, 0, 0) 0) 21px 30px,
       radial-gradient(circle farthest-side at 0% 50%, #2c3539 24%, rgba(240, 166, 17, 0) 0) 19px 30px,
@@ -106,11 +106,29 @@ const Dashboard = () => {
         } finally {
           console.log('Loading finished.');
           // Reset loading state or perform other cleanup if needed
+          setValues({
+            diet:"null",
+            shower:"null",
+            heat:"null",
+            Gbill:0,
+            Transport:"null",
+            Vtype:"null",
+            Tair:"null",
+            VmD:0,
+            Wbs:"null",
+            Wbwc:0,
+            Tv:0,
+            NewClothes:0,
+            InternetDaily:0
+        })
         }
       };
       
     const HandleOnSubmit = () => {
         setInput(1)
+       
+        handleSendData()
+        
         if(personal===false){
             const personalDocumentRef = doc(db, 'Database', `${user.email}`, 'personal', id);
 
@@ -128,16 +146,16 @@ const Dashboard = () => {
             
         }
         console.log(values)
-        handleSendData()
+       
     }
-   
     
     console.log(user)
     useEffect(()=>{
         if(user){
         onSnapshot(personalSubcollectionRef, (snapshot) => {
             const docs = snapshot.docs
-            console.log(docs[0].id)
+            console.log(docs)
+            //console.log(docs[0].id)
             setId(docs[0].id)
             console.log(docs[0]._document.data.value.mapValue.fields)
             if(docs[0]._document.data.value.mapValue.fields.body.stringValue==="none"){
@@ -234,6 +252,7 @@ const Dashboard = () => {
                <Select placeholder='Select option' w="300px"
                    bgColor="grey"
                    onChange={(e)=>{setBody(e.target.value)}}
+                   
                >
                    <option value='obese' 
                        style={{color:"black",bgColor:"grey"}}
@@ -291,6 +310,7 @@ const Dashboard = () => {
                         ...prevValues,
                         diet:e.target.value 
                       }));}}
+                      value={values.diet}
                 >
                     <option value='vegetarian' 
                         style={{color:"black",bgColor:"grey"}}
@@ -318,6 +338,7 @@ const Dashboard = () => {
                         ...prevValues,
                         shower:e.target.value 
                       }));}}
+                      value={values.shower}
                 >
                     <option value='more frequently' style={{color:"black",bgColor:"grey"}}>more frequently</option>
                     <option value='twice a day' style={{color:"black",bgColor:"grey"}}>twice a day</option>
@@ -353,6 +374,7 @@ const Dashboard = () => {
                         ...prevValues,
                         heat:e.target.value 
                       }));}}
+                      value={values.heat}
                 >
                     <option value='coal' style={{color:"black",bgColor:"grey"}}>coal</option>
                     <option value='natural gas' style={{color:"black",bgColor:"grey"}}>natural gas</option>
@@ -372,13 +394,18 @@ const Dashboard = () => {
                     color="white"
                     pl="10px"
                 >Monthly Grocery Bill</FormLabel>
-                <NumberInput>
+                <NumberInput
+                    value={values.Gbill}
+                >
                     <NumberInputField w="300px"
                     bgColor="grey"
                     onChange={(e)=>{setValues((prevValues) => ({
                         ...prevValues,
                         Gbill:e.target.value 
-                      }));}}/>
+                      }));}}
+                      
+                      
+                      />
                     <NumberInputStepper>
                         <NumberIncrementStepper />
                         <NumberDecrementStepper />
@@ -409,11 +436,12 @@ const Dashboard = () => {
                 >Frequency of Traveling by Air</FormLabel>
                 <Select placeholder='Select option' w="300px"
                     bgColor="grey"
+                    value={values.Tair}
                     onChange={(e)=>{setValues((prevValues) => ({
                         ...prevValues,
                         Tair:e.target.value 
                       }));}}
-                >
+                      >
                     <option value='very frequently' style={{color:"black",bgColor:"grey"}}>very frequently</option>
                     <option value='frequently' style={{color:"black",bgColor:"grey"}}>frequently</option>
                     <option value='rarely' style={{color:"black",bgColor:"grey"}}>rarely</option>
@@ -433,13 +461,17 @@ const Dashboard = () => {
                     color="white"
                     pl="10px"
                 >Vehicle Monthly Distance Km</FormLabel>
-                 <NumberInput>
+                 <NumberInput
+                    value={values.VmD}
+                 >
                     <NumberInputField w="300px"
                     bgColor="grey"
                     onChange={(e)=>{setValues((prevValues) => ({
                         ...prevValues,
                         VmD:e.target.value 
-                      }));}}/>
+                      }));}}
+                      
+                      />
                     <NumberInputStepper>
                         <NumberIncrementStepper />
                         <NumberDecrementStepper />
@@ -475,6 +507,7 @@ const Dashboard = () => {
                         ...prevValues,
                         Transport:e.target.value 
                       }));}}
+                      value={values.Transport}
                 >
                     <option value='public' style={{color:"black",bgColor:"grey"}}>Public</option>
                     <option value='private' style={{color:"black",bgColor:"grey"}}>private</option>
@@ -501,12 +534,13 @@ const Dashboard = () => {
                         ...prevValues,
                         Vtype:e.target.value 
                       }));}}
+                      value={values.Vtype}
                 >
                     <option value='petrol' style={{color:"black",bgColor:"grey"}}>petrol</option>
-                    <option value='disel' style={{color:"black",bgColor:"grey"}}>disel</option>
+                    <option value='diesel' style={{color:"black",bgColor:"grey"}}>diesel</option>
                     <option value='hybrid' style={{color:"black",bgColor:"grey"}}>hybrid</option>
-                    <option value='lpg' style={{color:"black",bgColor:"grey"}}>lpg</option>
-                    <option value='electric' style={{color:"black",bgColor:"grey"}}>electric</option>
+                    
+                   
                     
                 </Select>
                  
@@ -540,6 +574,7 @@ const Dashboard = () => {
                         ...prevValues,
                         Wbs:e.target.value 
                       }));}}
+                      value={values.Wbs}
                 >
                     <option value='extra large' style={{color:"black",bgColor:"grey"}}>extra large</option>
                     <option value='large' style={{color:"black",bgColor:"grey"}}>large</option>
@@ -560,13 +595,18 @@ const Dashboard = () => {
                     color="white"
                     pl="10px"
                 >Waste Bag Weekly Count</FormLabel>
-                <NumberInput>
+                <NumberInput
+                    value={values.Wbwc}
+                >
                     <NumberInputField w="300px"
                     bgColor="grey"
                     onChange={(e)=>{setValues((prevValues) => ({
                         ...prevValues,
                         Wbwc:e.target.value 
-                      }));}}/>
+                      }));}}
+                      
+                      />
+                       
                     <NumberInputStepper>
                         <NumberIncrementStepper />
                         <NumberDecrementStepper />
@@ -595,13 +635,17 @@ const Dashboard = () => {
                     color="white"
                     pl="10px"
                 >How Long TV PC Daily Hour</FormLabel>
-                <NumberInput>
+                <NumberInput
+                    value={values.Tv}
+                >
                     <NumberInputField w="300px"
                     bgColor="grey"
                     onChange={(e)=>{setValues((prevValues) => ({
                         ...prevValues,
                         Tv:e.target.value 
-                      }));}}/>
+                      }));}}
+                      
+                      />
                     <NumberInputStepper>
                         <NumberIncrementStepper />
                         <NumberDecrementStepper />
@@ -620,13 +664,17 @@ const Dashboard = () => {
                     color="white"
                     pl="10px"
                 >How Many New Clothes Monthly</FormLabel>
-                 <NumberInput>
+                 <NumberInput
+                    value={values.NewClothes}  
+                 >
                     <NumberInputField w="300px"
                     bgColor="grey"
                     onChange={(e)=>{setValues((prevValues) => ({
                         ...prevValues,
                        NewClothes:e.target.value 
-                      }));}}/>
+                      }));}}
+                      
+                      />
                     <NumberInputStepper>
                         <NumberIncrementStepper />
                         <NumberDecrementStepper />
@@ -655,13 +703,17 @@ const Dashboard = () => {
                     color="white"
                     pl="10px"
                 >How Long Internet Daily Hour</FormLabel>
-                <NumberInput>
+                <NumberInput
+                    value={values.InternetDaily}
+                >
                     <NumberInputField w="300px"
                     bgColor="grey"
                     onChange={(e)=>{setValues((prevValues) => ({
                         ...prevValues,
                         InternetDaily:e.target.value 
-                      }));}}/>
+                      }));}}
+                      
+                     />
                     <NumberInputStepper>
                         <NumberIncrementStepper />
                         <NumberDecrementStepper />
@@ -689,7 +741,7 @@ const Dashboard = () => {
                 justifyContent="flex-start"
                 alignItems="center"
             >
-                {input!==1?<Button
+                {input!==1&&input!==0?<Button
                     colorScheme='teal'
                     size="md"
                     onClick={()=>{

@@ -1,6 +1,6 @@
-import { Box, Button, Image } from '@chakra-ui/react';
+import { Box, Button, Image, useDisclosure } from '@chakra-ui/react';
 import { signInWithPopup } from "firebase/auth";
-import { useContext, useState } from "react";
+import { useContext, useRef, useState } from "react";
 import { db } from '../Firebase/Firebase';
 import { addDoc, getDocs, setDoc,collection,doc,onSnapshot} from "firebase/firestore";
 import { auth, provider } from "../Firebase/Firebase";
@@ -11,12 +11,32 @@ import React,{ useEffect } from 'react';
 import { Value } from '../contexts/ValuesContext';
 import { Personal } from '../contexts/PersonalContext';
 import logo from "../../assets/Images/logo.jpg"
+import {
+  Drawer,
+  DrawerBody,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerOverlay,
+  DrawerContent,
+  DrawerCloseButton,
+  Input,
+} from '@chakra-ui/react'
 
 const Navbar = () => {
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth' // For smooth scrolling
+    });
+  };
+
+  const [navbarColor, setNavbarColor] = useState(false);
+  const { isOpen, onOpen, onClose } = useDisclosure()
+  const btnRef = useRef()
  
   const theme = {
   width: "100%",
-  height: "100%",
+  height: "10%",
   background: `
     radial-gradient(circle farthest-side at 0% 50%, #282828 23.5%, rgba(255, 170, 0, 0) 0) 21px 30px,
     radial-gradient(circle farthest-side at 0% 50%, #2c3539 24%, rgba(240, 166, 17, 0) 0) 19px 30px,
@@ -26,15 +46,35 @@ const Navbar = () => {
     linear-gradient(90deg, #2c3539 2%, #282828 0, #282828 98%, #2c3539 0%) 0 0 #282828`,
   backgroundSize: "40px 60px"
 }  
-  const [email,setEmail] = useState(null) 
+  const [email,setEmail] = useState(null)   
+
  
-  const[personal,setPersonal] = useContext(Personal)
+  const[personal,setPersonal] = useState("")
   const [user,setUser] = useContext(Authentication);
   const [pic,setPic] = useState(null)
   const navigate = useNavigate();
   const location = useLocation();
-  const personalSubcollectionRef = collection(db, 'Database', `${email}`, 'personal');
+  
   const carbonFootprintSubcollectionRef = collection(db, 'Database',` ${email}`, 'carbon footprint');
+  
+
+  const handleScroll = () => {
+    if (window.scrollY > 50) {  // Change the value '50' to adjust the scroll threshold
+      setNavbarColor(true);
+    } else {
+      setNavbarColor(false);
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener('scroll', handleScroll);
+
+    // Cleanup the event listener on unmount
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
   useEffect(()=>{
     try{
       if(user!==null){
@@ -91,11 +131,39 @@ const Navbar = () => {
           //console.log(pic)
           console.log("hi")
           console.log(pic)
+          const personalSubcollectionRef = collection(db, 'Database',`${users.email}`, 'personal');
+          const subcollectionRef = collection(db,'Database')
+          onSnapshot(personalSubcollectionRef,(snapshot)=>{
+            const docs = snapshot;
+            console.log(docs)
+            const docData = {
+                body:"none",
+                sex:"none"
+          };
+            if(docs.empty){
+              console.log(true)
+              try{
+                const docRef = addDoc(personalSubcollectionRef,docData)
+                console.log("Document written with ID: ", docRef.id);
+              }
+              catch(error){
+                console.log(error)
+              }
+             
+            }
+            else{
+              console.log(false)
+            }
+          })
+        
+          
+          
         } catch (error) {
           console.log("error",error)
         }
-      }
       
+      }
+    
       
   } catch (error) {
     console.log("error:", error)
@@ -107,9 +175,11 @@ const Navbar = () => {
 
   }
   
+  
   }
   return (
-    <div id="navContainer" style = {theme}>
+    <div id="navContainer" style = {!navbarColor?theme:{background:"#2c2a2a" , transition:"ease-in-out"}}>
+      {/*,borderBottom: "2px solid #4CAF50"*/}
       <div
         className='Left_icons'
       >
@@ -126,9 +196,12 @@ const Navbar = () => {
       
       <ul id="list">
         
-        <li>Home</li>
+        <li><a
+          onClick={()=>navigate('/')}
+        >
+          Home
+          </a></li>
         <li><a href="#about">About</a></li>
-       
       </ul>
       <Box
         display="flex"
@@ -159,10 +232,26 @@ const Navbar = () => {
         h="60px"
         borderRadius="100px"
         m="10px"
+        ref={btnRef}
+        onClick={onOpen}
       >
 
       </Image>:null}
       </Box>
+      <Drawer
+        isOpen={isOpen}
+        placement='right'
+        onClose={onClose}
+        finalFocusRef={btnRef}
+      >
+        <DrawerOverlay />
+        <DrawerContent>
+          <DrawerCloseButton />
+          <DrawerFooter bg="white">
+            <Button sx={{margin:"20px"}} size="md">Sign Out</Button>
+          </DrawerFooter>
+        </DrawerContent>
+      </Drawer>
     </div>
   );
 }
