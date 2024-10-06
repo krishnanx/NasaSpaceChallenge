@@ -106,12 +106,7 @@ const Dashboard = () => {
         } finally {
           console.log('Loading finished.');
           // Reset loading state or perform other cleanup if needed
-        }
-      };
-      
-    const HandleOnSubmit = () => {
-        setInput(1)
-        setValues({
+          setValues({
             diet:"null",
             shower:"null",
             heat:"null",
@@ -126,8 +121,14 @@ const Dashboard = () => {
             NewClothes:0,
             InternetDaily:0
         })
+        }
+      };
+      
+    const HandleOnSubmit = () => {
+        setInput(1)
+       
         handleSendData()
-    }
+        
         if(personal===false){
             const personalDocumentRef = doc(db, 'Database', `${user.email}`, 'personal', id);
 
@@ -146,7 +147,7 @@ const Dashboard = () => {
         }
         console.log(values)
        
-   
+    }
     
     console.log(user)
     useEffect(()=>{
