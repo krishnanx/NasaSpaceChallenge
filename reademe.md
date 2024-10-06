@@ -23,6 +23,8 @@ CodeTally is a webstie that uses a xgboost model to predict the carbon emitted b
 3. Leaderboard
 
 ![leader](Nasa/src//assets//Images/table.png)
+#Project Explanation(video)
+    
 # Tech Stack 🚀
 
 1. React+Vite (frontend)
