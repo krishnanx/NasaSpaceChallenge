@@ -1,3 +1,7 @@
+html {
+  scroll-behavior: smooth;
+}
+
 #navContainer {
   display: flex;
   flex-direction: row;
