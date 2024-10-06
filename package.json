@@ -1,0 +1,10 @@
+{
+  "dependencies": {
+    "chart.js": "^4.4.4",
+    "highcharts": "^11.4.8",
+    "highcharts-react-official": "^3.2.1",
+    "react-chartjs-2": "^5.2.0",
+    "react-highcharts": "^16.1.0",
+    "react-simple-maps": "^3.0.0"
+  }
+}

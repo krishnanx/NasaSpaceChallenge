@@ -35,7 +35,7 @@ const Navbar = () => {
   const location = useLocation();
   const personalSubcollectionRef = collection(db, 'Database', `${email}`, 'personal');
   const carbonFootprintSubcollectionRef = collection(db, 'Database',` ${email}`, 'carbon footprint');
-  {/*useEffect(()=>{
+  useEffect(()=>{
     try{
       if(user!==null){
       onSnapshot(personalSubcollectionRef, (snapshot) => {
@@ -54,7 +54,7 @@ const Navbar = () => {
       console.log(error)
     }
     
-   },[user])*/}
+   },[user])
  
   const HandleGetStarted = () =>{
     if(email){
@@ -89,8 +89,8 @@ const Navbar = () => {
         try {
           setPic(users.photoURL);
           //console.log(pic)
-          
           console.log("hi")
+          console.log(pic)
         } catch (error) {
           console.log("error",error)
         }

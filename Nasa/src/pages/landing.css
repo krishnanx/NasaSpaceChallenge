@@ -341,3 +341,23 @@ footer {
   font-size: large;
   font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
+
+#chart-section{
+  display: flex;
+  flex-direction: row;
+  width: 100vw;
+  height: 30%;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+}
+
+#chart-bar-1{
+  width: 50%;
+  display: flex;
+  
+}
+#chart-bar-2{
+  width: 30%;
+  display: flex;
+  
+}
