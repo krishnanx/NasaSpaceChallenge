@@ -1,7 +1,7 @@
-# CodeTally 🌳
+# Carbon Tally 🌳
 **Track today, sustain tomorrow**
 
-CodeTally is a webstie that uses a xgboost model to predict the carbon emitted by a person per month. This website provides a seamless UI that enables users to track their carbon emission , get tips and provides a local leaderboard that shows the carbon emissions of people in a locality. In this way we aim to promote people to produce less carbon and greenhouse gasses by providing incentives to best performers
+Carbon Tally is a webstie that uses a xgboost model to predict the carbon emitted by a person per month. This website provides a seamless UI that enables users to track their carbon emission , get tips and provides a local leaderboard that shows the carbon emissions of people in a locality. In this way we aim to promote people to produce less carbon and greenhouse gasses by providing incentives to best performers
 
 # User Interface
 
