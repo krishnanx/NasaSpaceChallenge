@@ -101,7 +101,7 @@ const Dashboard = () => {
         //       })
         //       return;
         //   }
-          const response = await fetch('/api/send-data', {
+          const response = await fetch('https://nasaspacechallenge-pzje.onrender.com/api/send-data', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
