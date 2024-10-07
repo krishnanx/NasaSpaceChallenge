@@ -24,6 +24,13 @@ Carbon Tally is a webstie that uses a xgboost model to predict the carbon emitte
 
 ![leader](Nasa/src//assets//Images/table.png)
 
+4. Working Video
+
+<video width="600" controls>
+  <source src="https://www.youtube.com/watch?v=Hp8RtDSDq0Q" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
+
     
 # Tech Stack 🚀
 
