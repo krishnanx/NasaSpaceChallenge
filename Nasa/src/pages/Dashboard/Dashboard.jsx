@@ -22,9 +22,9 @@ import {
 const Dashboard = () => {
   const toast = useToast()
   const [Cvalue,setCurrent_value] = useState("")
-  const [data,setData] = useState("")
+  //const [data,setData] = useState("")
   const [Nvalue,setNew_value] = useState("")
-  const [docs,setDocs] = useState("")
+  //const [docs,setDocs] = useState("")
   const { isOpen, onOpen, onClose } = useDisclosure()
   const theme = {
     width: "100%",
@@ -39,16 +39,16 @@ const Dashboard = () => {
     backgroundSize: "40px 60px",
     color: "white"  // Ensures the text is visible against the dark background
   };
-    const [values,setValues] = useContext(Value);
-    const [personal,setPersonal] = useState("");
+    const [values,setValues,docs,setDocs,data,setData,pdocs,setPDocs,id,setId,body,setBody,sex,setSex,personal,setPersonal,input,setInput] = useContext(Value);
+    //const [personal,setPersonal] = useState("");
     const [user,setUser] = useContext(Authentication);
-    const [id,setId] = useState("")
-    const [input,setInput ]  = useState(1);
-    const [body,setBody] = useState(null)
+    //const [id,setId] = useState("")
+    //const [input,setInput ]  = useState(1);
+    //const [body,setBody] = useState(null)
     
     //console.log(user)
-    const [sex,setSex] = useState(null)
-    let personalSubcollectionRef = collection(db, 'Database', `${user.email}`, 'personal');
+    //const [sex,setSex] = useState(null)
+    //let personalSubcollectionRef = collection(db, 'Database', `${user.email}`, 'personal');
     const waste_bag = {"small":0 , "medium":1 , "large":2 , "extra large":3}
     const body_type = {"normal":0 ,"underweight":1, "overweight":2,"obese":3}
     const sex_type = {"male":0 , "female":1}
@@ -58,7 +58,23 @@ const Dashboard = () => {
     const heating_map = {"electricity":0 , "natural gas":1 , "wood":2 , "coal":3}
     const transport = {"public":0 , "private":2 , "walk/bicycle":1}
     const vehicle_type = {"NA":0 , "hybrid":1 , "diesel":3 , "petrol":2}
+    /*useEffect(()=>{
+        const carbonFootprintSubcollectionRef = collection(db, 'Database',`${user.email}`, 'carbonfootprint');
+        onSnapshot(carbonFootprintSubcollectionRef,(snapshot)=>{
+            //console.log("Snapshot:",snapshot)
+            const docs = snapshot;
+            const result = docs.docs[0]._document.data.value.mapValue.fields.Footprint.doubleValue;
+            console.log("Docs:",docs)
+            setDocs(docs)
+            console.log("result:",result)
+            setCurrent_value(result);
+            })
 
+    },[])*/
+        const userDoc = doc(db,'users',`${user.email}`);
+        const userDocRef = collection(db,'users', `${user.email}`,`${user.displayName}`);
+        const personalSubcollectionRef = collection(userDocRef,"Values" ,'personal');
+        const carbonFootprintSubcollectionRef = collection(userDocRef,"Values",'carbonfootprint');
     const handleSendData = async () => {
         const dataToSend = {
           "Body Type":body_type[body],
@@ -113,10 +129,46 @@ const Dashboard = () => {
             throw new Error(`HTTP error! status: ${response.status}`);
           }
       
-          const data = await response.json();
-          console.log('Response from server:', data);
-          setData(data)
+          const datas = await response.json();
+          console.log('Response from server:', datas);
+          setData(datas)
+         
+       
+        console.log("docs is not empty")
+        console.log(docs)
+        //const carbonfootprint = doc(db, 'Database',`${user.email}`, 'carbonfootprint',docs.docs[0].id);
+        if ('FootPrint' in docs._document.data.value.mapValue.fields) {
+            //console.log('Footprint field exists:', docData.footprint);
+            const carbonfootprint = doc(db,"users",`${user.email}`);
+            const current = docs._document.data.value.mapValue.fields.FootPrint.doubleValue
+            updateDoc(carbonfootprint, {
+                FootPrint:current+datas.data_sent
+            })
+            .then(() => {
+                console.log("Document successfully updated!");
+            })
+            .catch((error) => {
+                console.error("Error updating document: ", error);
+            });
+
+          } else {
+            console.log('Footprint field does not exist.');
+            await setDoc(userDoc, { FootPrint: datas.data_sent }, { merge: true });
+          }
+        //const carbonfootprint = doc(userDocRef);
+        //const current = docs._document.data.value.mapValue.fields.footprint.doubleValue
+        
+        /*updateDoc(carbonfootprint, {
+            Footprint:current+datas.data_sent
+        })
+        .then(() => {
+            console.log("Document successfully updated!");
+        })
+        .catch((error) => {
+            console.error("Error updating document: ", error);
+        });*/
           
+
           /*let carbonFootprintSubcollectionRef = collection(db, 'Database',`${user.email}`, 'carbonfootprint');
           onSnapshot(carbonFootprintSubcollectionRef,(snapshot)=>{
             let carbonFootprintSubcollectionRef = collection(db, 'Database',`${user.email}`, 'carbonfootprint');
@@ -158,7 +210,7 @@ const Dashboard = () => {
           console.error('Error sending data:', error);
           // Handle error (e.g., show error message to the user)
         } finally {
-           
+         
                 
           console.log('Loading finished.');
           // Reset loading state or perform other cleanup if needed
@@ -188,10 +240,9 @@ const Dashboard = () => {
         handleSendData()
         onOpen()
         if(personal===false){
-            const personalDocumentRef = collection(db, 'Database', `${user.email}`, 'personal', id);
-
+            //const personalDocumentRef = collection(db, 'Database', `${user.email}`, 'personal', id)
             // Update the document with new 'body' and 'sex' values
-            updateDoc(personalDocumentRef, {
+            updateDoc(userDoc, {
                 body: body,
                 sex: sex
             })
@@ -210,25 +261,9 @@ const Dashboard = () => {
     //console.log(user)
     useEffect(()=>{
         if(user){
-        onSnapshot(personalSubcollectionRef, (snapshot) => {
-            const docs = snapshot.docs
-            //console.log(docs)
-            //console.log(docs[0].id)
-            setId(docs[0].id)
-            //console.log(docs[0]._document.data.value.mapValue.fields)
-            if(docs[0]._document.data.value.mapValue.fields.body.stringValue==="none"){
-              
-                //console.log("lik")
-                setInput(0);
-                setPersonal(false)
-            }
-            else{
-                setBody(docs[0]._document.data.value.mapValue.fields.body.stringValue)
-                setSex(docs[0]._document.data.value.mapValue.fields.sex.stringValue)
-                setPersonal(true)
-            }
-        })}
-    },[user])
+           
+        }
+    },[])
     
   return (
     <Box

@@ -1,5 +1,5 @@
 import { Box } from '@chakra-ui/react'
-import React from 'react'
+import React,{useContext, useEffect} from 'react'
 import TableUser from '../../Components/table/TableUser'
 import {
     Table,
@@ -13,9 +13,14 @@ import {
     TableContainer,
     
   } from '@chakra-ui/react'
-
+import { Value } from '../../Components/contexts/ValuesContext'
 const Leaderboard = () => {
-    const users = [
+  const [values,setValues,docs,setDocs,data,setData,pdocs,setPDocs,id,setId,body,setBody,sex,setSex,personal,setPersonal,input,setInput,object,setObject] = useContext(Value);
+  console.log("object:",object)  
+  const array = Object.values(object);
+  array.sort((a, b) => a.FootPrint - b.FootPrint)
+  console.log(array)
+  const users = [
         { id: 1, username: 'Aarav Sharma', value: 132 },
         { id: 2, username: 'Fatima Al Bakr', value: 206 },
         { id: 3, username: 'Li Wei', value: 311 },
@@ -39,6 +44,13 @@ const Leaderboard = () => {
           linear-gradient(90deg, #2c3539 2%, #282828 0, #282828 98%, #2c3539 0%) 0 0 #282828`,
         backgroundSize: "40px 60px"
       }  
+    useEffect(()=>{
+      
+      console.log("object:",object)  
+      
+      array.sort((a, b) => a.FootPrint - b.FootPrint);
+      console.log(array)
+    },[object])
   return (
     <Box
        
@@ -65,12 +77,15 @@ const Leaderboard = () => {
                 </Tr>
               </Thead>
               <Tbody>
-                {users.map((user, index) => (
+                
+                {
+               
+                array.map((user,index) => (
                   <TableUser 
                     key={user.id || index} // Make sure to use a unique key
                     rank={index + 1} // Assuming the rank is based on the index
-                    username={user.username}
-                    value={user.value}
+                    username={user.name}
+                    value={user.FootPrint}
                   />
                 ))}
               </Tbody>

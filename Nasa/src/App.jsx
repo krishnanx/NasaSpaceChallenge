@@ -26,7 +26,7 @@ function App() {
                   <Route path='/Dashboard' element={<Protected>
                       <Dashboard />
                     </Protected>}/>
-                  <Route path='/Leaderboard' element={<Leaderboard/>}/>
+                  <Route path='/Leaderboard' element={<Protected><Leaderboard/></Protected>}/>
                   
                 </Routes>
           
