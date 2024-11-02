@@ -3,9 +3,12 @@ import torch
 import numpy as np
 from network import CarbonEmissionModel
 import joblib
+from flask_cors import CORS
 
 
 app = Flask(__name__)
+
+CORS(app, resources={r"/*": {"origins": "https://nasa-space-challenge.vercel.app"}})
 
 model = CarbonEmissionModel(15,128,64,1)
 model.eval()
@@ -24,9 +27,12 @@ def receive_data():
     features = np.array(features).reshape(1,-1)
     print(features)
     preds = model2.predict(features)
-    #unscaled = abs(preds*1000-((preds*1000)*(30/100)))
-    #print(float(preds.item()))
-    #print(scaler.inverse_transform(preds))
+    
+    try:
+        preds = model2.predict(features)
+    except Exception as e:
+        return jsonify({'status': 'error', 'message': 'Prediction failed'}), 500
+  
     preds = float(preds[0])
     return jsonify({'status': 'success', 'data_received': data,'data_sent':preds}), 200
 
